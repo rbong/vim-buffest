@@ -1,0 +1,65 @@
+*buffest.txt*  Easily edit vim registers/macros and lists as buffers.
+
+Author:  Roger Bongers <http://github.com/rbong>
+
+*buffest*
+
+COMMANDS                                                    *buffest-commands*
+
+All commands can be mapped using <Plug> and the name of the command.
+See |using-<Plug>|.
+
+*:Regsplit* *:Regvsplit* *:Regtabedit*
+
+Each of these commands takes one argument, the name of the register.
+Each command opens the register in the way indicated.
+Only the named registers, as well as {*}, {+}, and {"} are supported.
+
+*:Qflistsplit* *:Qflistvsplit* *Qflisttabedit*
+
+Each of these commands open the quickfix list in the way indicated.
+
+*:Loclistsplit* *:Loclistvsplit* *Loclisttabedit*
+
+Each of these commands open the location list in the way indicated.
+
+USING BUFFERS                                                *buffest-buffers*
+
+On re-opening a buffer it will automatically update from the register or list.
+
+Normal updating: >
+  :e
+
+Force update: >
+  :e!
+
+Buffers will automatically write to the buffer or list.
+
+Write buffer: >
+  :w
+
+Write and exit: >
+  :wq
+Alternative: >
+  ZZ
+
+MAPPINGS                                                    *buffest-mappings*
+
+All mappings can be overriden by setting the corresponding <Plug> setting.
+
+c@{regname}                                                  *buffest-c@* *c@*
+
+Edit the register in a split (<Plug>Regsplit).
+
+c@@                                                        *buffest-c@@* *c@@*
+
+Edit the {"} register in a split.
+Only set when the default register mapping is set.
+
+cq                                                           *buffest-cq* *cq*
+
+Edit the quickfix list in a split (<Plug>Qflistsplit).
+
+cl                                                           *buffest-cl* *cl*
+
+Edit the location list in a split (<Plug>Loclistsplit).
