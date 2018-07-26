@@ -19,7 +19,7 @@ command! -nargs=0 Loclisttabedit call buffest#loclistdo('tabedit')
 
 " Bindings {{{
 
-if !hasmapto('<Plug>Regsplit')
+if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') == ''
   map <unique> c@ <Plug>Regsplit
   " Only map this if the defaul mapping is used
   nnoremap <unique> c@@ :Regsplit "<cr>
@@ -35,7 +35,7 @@ if hasmapto('<Plug>Regtabedit')
   nnoremap <Plug>Regtabedit :execute 'Regtabedit '.nr2char(getchar())<cr>
 endif
 
-if !hasmapto('<Plug>Qflistsplit')
+if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') == ''
   map <unique> c,q <Plug>Qflistsplit
 endif
 
@@ -49,7 +49,7 @@ if hasmapto('<Plug>Qflisttabedit')
   nnoremap <Plug>Qflisttabedit :Qflisttabedit<cr>
 endif
 
-if !hasmapto('<Plug>Loclistsplit')
+if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') == ''
   map <unique> c,l <Plug>Loclistsplit
 endif
 
