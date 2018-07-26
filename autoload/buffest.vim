@@ -118,10 +118,14 @@ function buffest#listfieldcomplete(...)
   return g:buffest_supported_list_fields
 endfunction
 
+function buffest#filterlistfields(list)
+  return filter(uniq([] + a:list), 'index(g:buffest_supported_list_fields, v:val) >= 0')
+endfunction
+
 function buffest#qflistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname(',q')
   " must create a new array for uniq to work
-  let b:buffest_list_fields = uniq([] + a:000)
+  let b:buffest_list_fields = buffest#filterlistfields(a:000)
   set filetype=buffestqflist
   edit!
 endfunction
@@ -129,7 +133,7 @@ endfunction
 function buffest#loclistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname(',l')
   " must create a new array for uniq to work
-  let b:buffest_list_fields = uniq([] + a:000)
+  let b:buffest_list_fields = buffest#filterlistfields(a:000)
   set filetype=buffestloclist
   edit!
 endfunction
