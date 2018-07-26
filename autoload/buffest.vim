@@ -2,6 +2,8 @@ let g:buffest_supported_registers = map(range(char2nr('a'),char2nr('z')),'nr2cha
 
 let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 
+let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
+
 function! buffest#tmpname(name)
   let l:tmp = '/'.$TMP.'/buffest/'
   if $TMP == ""
@@ -110,6 +112,10 @@ endfunction
 
 function buffest#writeloclist()
   call setloclist('.', buffest#writelistfile())
+endfunction
+
+function buffest#listfieldcomplete(...)
+  return g:buffest_supported_list_fields
 endfunction
 
 function buffest#qflistdo(cmd, ...)
