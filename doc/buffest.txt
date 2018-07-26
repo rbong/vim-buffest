@@ -63,3 +63,5 @@ Edit the quickfix list in a split (<Plug>Qflistsplit).
 c,l                                                        *buffest-c,l* *c,l*
 
 Edit the location list in a split (<Plug>Loclistsplit).
+
+ vim: ft=help
