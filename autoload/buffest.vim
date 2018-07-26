@@ -113,7 +113,7 @@ function buffest#writeloclist()
 endfunction
 
 function buffest#qflistdo(cmd, ...)
-  exec a:cmd . ' ' . buffest#tmpname('[]q')
+  exec a:cmd . ' ' . buffest#tmpname(',q')
   " must create a new array for uniq to work
   let b:buffest_list_fields = uniq([] + a:000)
   set filetype=buffestqflist
@@ -121,7 +121,7 @@ function buffest#qflistdo(cmd, ...)
 endfunction
 
 function buffest#loclistdo(cmd, ...)
-  exec a:cmd . ' ' . buffest#tmpname('[]l')
+  exec a:cmd . ' ' . buffest#tmpname(',l')
   " must create a new array for uniq to work
   let b:buffest_list_fields = uniq([] + a:000)
   set filetype=buffestloclist
