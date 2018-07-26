@@ -36,7 +36,7 @@ if hasmapto('<Plug>Regtabedit')
 endif
 
 if !hasmapto('<Plug>Qflistsplit')
-  map <unique> cq <Plug>Qflistsplit
+  map <unique> c,q <Plug>Qflistsplit
 endif
 
 nnoremap <Plug>Qflistsplit :Qflistsplit<cr>
@@ -50,7 +50,7 @@ if hasmapto('<Plug>Qflisttabedit')
 endif
 
 if !hasmapto('<Plug>Loclistsplit')
-  map <unique> cl <Plug>Loclistsplit
+  map <unique> c,l <Plug>Loclistsplit
 endif
 
 nnoremap <Plug>Loclistsplit :Loclistsplit<cr>

@@ -22,7 +22,7 @@ Additionally, `c@@` opens the `"` register.
 **Opening the quickfix list**
 
 ```
-cq
+c,q
 :Qflistsplit
 :Qflistvsplit
 :Qflisttabedit
@@ -31,7 +31,7 @@ cq
 **Opening the location list**
 
 ```
-cl
+c,l
 :Loclistsplit
 :Loclistvsplit
 :Loclisttabedit
