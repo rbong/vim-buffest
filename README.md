@@ -37,6 +37,13 @@ c,l
 :Loclisttabedit
 ```
 
+**Opening lists with specific fields shown**
+
+```
+:Qflistsplit filename lnum
+:Loclistsplit filename lnum
+```
+
 **Reloading and writing**
 
 Write a buffer to the target:

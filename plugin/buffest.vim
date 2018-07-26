@@ -7,13 +7,13 @@ command! -complete=customlist,buffest#regcomplete -nargs=1
 command! -complete=customlist,buffest#regcomplete -nargs=1
       \ Regtabedit call buffest#regdo(<f-args>, 'tabedit')
 
-command! -nargs=0 Qflistsplit call buffest#qflistdo('split')
-command! -nargs=0 Qflistvsplit call buffest#qflistdo('vsplit')
-command! -nargs=0 Qflisttabedit call buffest#qflistdo('tabedit')
+command! -nargs=* Qflistsplit call buffest#qflistdo('split', <f-args>)
+command! -nargs=* Qflistvsplit call buffest#qflistdo('vsplit', <f-args>)
+command! -nargs=* Qflisttabedit call buffest#qflistdo('tabedit', <f-args>)
 
-command! -nargs=0 Loclistsplit call buffest#loclistdo('split')
-command! -nargs=0 Loclistvsplit call buffest#loclistdo('vsplit')
-command! -nargs=0 Loclisttabedit call buffest#loclistdo('tabedit')
+command! -nargs=* Loclistsplit call buffest#loclistdo('split', <f-args>)
+command! -nargs=* Loclistvsplit call buffest#loclistdo('vsplit', <f-args>)
+command! -nargs=* Loclisttabedit call buffest#loclistdo('tabedit', <f-args>)
 
 " }}}
 

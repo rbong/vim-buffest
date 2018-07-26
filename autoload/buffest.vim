@@ -52,16 +52,38 @@ function! buffest#unescseparator(string)
 endfunction
 
 function! buffest#readlist(list)
-  let l:filelist = []
   if !len(a:list)
-    let l:filelist = ["{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', valid: 1}"]
+    let l:list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
   else
-    for l:item in a:list
+    let l:list = a:list
+  endif
+
+  " build the list to write to the file
+  let l:filelist = []
+  for l:item in l:list
+    " clean up the item
+    if exists("l:item['bufnr']")
       let l:item['filename'] = bufname(l:item['bufnr'])
       unlet l:item['bufnr']
-      let l:filelist += [string(l:item)]
-    endfor
-  endif
+    endif
+
+    " calculate the line
+    if !exists('b:buffest_list_fields') || !len(b:buffest_list_fields)
+      " add a straight up string representation of the line
+      let l:line = string(l:item)
+    else
+      " add a representation of the line with sorted fields
+      let l:line = '{'
+      for l:field in b:buffest_list_fields
+        let l:line .= "'".l:field."': ".string(l:item[l:field]).", "
+      endfor
+      let l:line .= '}'
+      let l:line = substitute(l:line, ", }$", "}", "")
+    endif
+
+    let l:filelist += [l:line]
+  endfor
+
   call writefile(l:filelist, expand('%:p'))
   edit!
 endfunction
@@ -90,14 +112,18 @@ function buffest#writeloclist()
   call setloclist('.', buffest#writelistfile())
 endfunction
 
-function buffest#qflistdo(cmd)
+function buffest#qflistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname('[]q')
+  " must create a new array for uniq to work
+  let b:buffest_list_fields = uniq([] + a:000)
   set filetype=buffestqflist
   edit!
 endfunction
 
-function buffest#loclistdo(cmd)
+function buffest#loclistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname('[]l')
+  " must create a new array for uniq to work
+  let b:buffest_list_fields = uniq([] + a:000)
   set filetype=buffestloclist
   edit!
 endfunction

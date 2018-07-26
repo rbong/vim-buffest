@@ -18,10 +18,20 @@ Only the named registers, as well as {*}, {+}, and {"} are supported.
 *:Qflistsplit* *:Qflistvsplit* *Qflisttabedit*
 
 Each of these commands open the quickfix list in the way indicated.
+These commands support |buffest-list-fields|.
 
 *:Loclistsplit* *:Loclistvsplit* *Loclisttabedit*
 
 Each of these commands open the location list in the way indicated.
+These commands support |buffest-list-fields|.
+
+LIST FIELDS                                              *buffest-list-fields*
+
+All list commands can optionally take in field arguments.
+If this list of fields is given, only those fields will be shown in output.
+The unlisted fields will be lost.
+
+The fields will be shown sorted.
 
 USING BUFFERS                                                *buffest-buffers*
 
