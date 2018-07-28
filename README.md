@@ -2,6 +2,8 @@
 
 Easily edit vim registers/macros and lists as buffers.
 
+[Demo video](/media/demo.webm?raw=true)
+
 ## Examples
 
 **Opening registers**
