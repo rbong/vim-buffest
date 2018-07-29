@@ -2,7 +2,7 @@
 
 Easily edit vim registers/macros and lists as buffers.
 
-[Demo video](/media/demo.webm?raw=true)
+![demo video](/media/demo.gif?raw=true)
 
 ## Examples
 
