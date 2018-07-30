@@ -18,7 +18,7 @@ c@a
 :Regtabedit a
 ```
 
-Repace `a` with `<buffer>` to edit that buffer.
+Repace `a` with `<register>` to edit that register.
 Additionally, `c@@` opens the `"` register.
 
 **Opening the quickfix list**
