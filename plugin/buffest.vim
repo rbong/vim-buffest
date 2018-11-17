@@ -1,6 +1,8 @@
 " Commands {{{
 
 command! -complete=customlist,buffest#regcomplete -nargs=1
+      \ Regedit call buffest#regdo(<f-args>, 'edit')
+command! -complete=customlist,buffest#regcomplete -nargs=1
       \ Regsplit call buffest#regdo(<f-args>, 'split')
 command! -complete=customlist,buffest#regcomplete -nargs=1
       \ Regvsplit call buffest#regdo(<f-args>, 'vsplit')
