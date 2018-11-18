@@ -22,7 +22,7 @@ fun! buffest#RegModeFromList(list) abort
     return 'V'
 endf
 fun! buffest#Get_reg2list(regname) abort
-    let processed = getreg('+', 1, 1) + (getregtype('+') ==# "V" ? [''] : [] )
+    let processed = getreg(a:regname, 1, 1) + (getregtype(a:regname) ==# "V" ? [''] : [] )
     return processed
 endf
 fun! buffest#Set_list2reg(regname, list) abort
@@ -83,8 +83,10 @@ function! buffest#readreg()
     return
   endif
   let l:regname = tolower(b:buffest_regname)
+  echom '!!' . l:regname
 
 let writecontent = buffest#Get_reg2list(l:regname)
+echom '!!writecontent '. string(writecontent)
 let file = expand('%:p')
 let modeAtWriting = buffest#Writefile(writecontent, file)
 call buffest#RegFileIntoBuffer(file, modeAtWriting)
@@ -110,8 +112,7 @@ function! buffest#regdo(regname, cmd)
   endif
   exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
   set filetype=buffestreg
-  let b:buffest_regname = a:regname
-
+  let b:buffest_regname = l:regname
   edit!
 endfunction
 
