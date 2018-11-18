@@ -9,6 +9,11 @@ command! -complete=customlist,buffest#regcomplete -nargs=1
 command! -complete=customlist,buffest#regcomplete -nargs=1
       \ Regtabedit call buffest#regdo(<f-args>, 'tabedit')
 
+command! -complete=customlist,buffest#regcomplete -nargs=1 Regwrite 
+      \ exec 'silent! bw! '.buffest#tmpname('@'.<q-args>) | 
+      \ exec 'saveas! '.buffest#tmpname('@'.<q-args>) | 
+      \ call buffest#adapt_buffer(1)
+
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Qflistsplit call buffest#qflistdo('split', <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*

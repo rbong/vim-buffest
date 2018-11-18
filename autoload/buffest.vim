@@ -51,7 +51,8 @@ endf
 " Gets called when a buffer name globbed '@*' is encountered.
 " Path gets matched against tmpfile generation method, so should work without
 " exta maintenance. glob pattern (in autocomd) could be centralized still.
-function! buffest#adapt_buffer() abort
+function! buffest#adapt_buffer(...) abort
+    let overrideReg = get(a:, 1, 0)
     let filename = expand('%:p')
     let matchingReg = ''
     for reg in g:buffest_supported_registers
@@ -63,6 +64,11 @@ function! buffest#adapt_buffer() abort
         let l:regname = tolower(matchingReg)
         if index(g:buffest_supported_registers, l:regname) < 0
           throw g:buffest_unsupported_register_error
+        endif
+        if overrideReg
+            set nofixeol noeol
+            w!
+            call buffest#Set_list2reg(matchingReg, buffest#Readfile(expand('%:p')))
         endif
         call buffest#regdo(matchingReg, 'edit')
     endif
