@@ -110,7 +110,7 @@ function! buffest#regdo(regname, cmd)
   endif
   exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
   set filetype=buffestreg
-  let b:buffest_regname = a:reg
+  let b:buffest_regname = a:regname
 
   edit!
 endfunction
