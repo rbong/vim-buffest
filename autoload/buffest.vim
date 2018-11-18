@@ -33,7 +33,6 @@ fun! buffest#Set_list2reg(regname, list) abort
     else
         let internalRepr = a:list
     endif
-    " echom 'the mode is: '.mode
     call setreg(a:regname, internalRepr, mode)
     return getreg(a:regname)
 endf
@@ -83,10 +82,8 @@ function! buffest#readreg()
     return
   endif
   let l:regname = tolower(b:buffest_regname)
-  echom '!!' . l:regname
 
 let writecontent = buffest#Get_reg2list(l:regname)
-echom '!!writecontent '. string(writecontent)
 let file = expand('%:p')
 let modeAtWriting = buffest#Writefile(writecontent, file)
 call buffest#RegFileIntoBuffer(file, modeAtWriting)
