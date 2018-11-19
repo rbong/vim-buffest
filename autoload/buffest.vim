@@ -7,7 +7,7 @@ let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 
 " Register Mode Workarounds {{{
 
 function! buffest#editregfile(file, modeAtWriting) abort
-  exec "edit! ".a:file
+  exec 'edit! '.a:file
   set nofixeol noeol
   if a:modeAtWriting ==# 'V'
     normal Go
@@ -22,7 +22,7 @@ function! buffest#getregmode(list) abort
 endfunction
 
 function! buffest#reg2list(regname) abort
-  let processed = getreg(a:regname, 1, 1) + (getregtype(a:regname) ==# "V" ? [''] : [] )
+  let processed = getreg(a:regname, 1, 1) + (getregtype(a:regname) ==# 'V' ? [''] : [] )
   return processed
 endfunction
 
