@@ -6,24 +6,27 @@ let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 
 
 " Register Mode Workarounds {{{
 
-fun! buffest#RegFileIntoBuffer(file, modeAtWriting) abort
+function! buffest#RegFileIntoBuffer(file, modeAtWriting) abort
   exec "edit! ".a:file
   set nofixeol noeol
   if a:modeAtWriting ==# 'V'
     normal Go
   endif
-endf
-fun! buffest#RegModeFromList(list) abort
+endfunction
+
+function! buffest#RegModeFromList(list) abort
   if empty(a:list) || !empty(a:list[-1])
     return 'v'
   endif
   return 'V'
-endf
-fun! buffest#Get_reg2list(regname) abort
+endfunction
+
+function! buffest#Get_reg2list(regname) abort
   let processed = getreg(a:regname, 1, 1) + (getregtype(a:regname) ==# "V" ? [''] : [] )
   return processed
-endf
-fun! buffest#Set_list2reg(regname, list) abort
+endfunction
+
+function! buffest#Set_list2reg(regname, list) abort
   let mode = buffest#RegModeFromList(a:list)
   if mode ==# 'V'
     " we have of course to strip that indicating newline again
@@ -33,14 +36,16 @@ fun! buffest#Set_list2reg(regname, list) abort
   endif
   call setreg(a:regname, internalRepr, mode)
   return getreg(a:regname)
-endf
-fun! buffest#Readfile(file) abort
+endfunction
+
+function! buffest#Readfile(file) abort
   return readfile(a:file, 'b')
-endf
-fun! buffest#Writefile(content, file) abort
+endfunction
+
+function! buffest#Writefile(content, file) abort
   call writefile(a:content, a:file, 'b')
   return buffest#RegModeFromList(a:content)
-endf
+endfunction
 
 " }}}
 
@@ -68,7 +73,7 @@ function! buffest#adapt_buffer(...) abort
     endif
     call buffest#regdo(matchingReg, 'edit')
   endif
-endf
+endfunction
 
 function! buffest#tmpname(name)
   let l:tmp = '/'.$TMP.'/buffest/'
