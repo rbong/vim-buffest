@@ -4,9 +4,7 @@ let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 
 let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  working around vim's register modes and write modes  "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Register Mode Workarounds {{{
 
 fun! buffest#RegFileIntoBuffer(file, modeAtWriting) abort
     exec "edit! ".a:file
@@ -44,9 +42,7 @@ fun! buffest#Writefile(content, file) abort
     return buffest#RegModeFromList(a:content)
 endf
 
-""""""""""""""""""""""""""""""""""""""""""""
-"  end of working around vim corner cases  "
-""""""""""""""""""""""""""""""""""""""""""""
+" }}}
 
 " Gets called when a buffer name globbed '@*' is encountered.
 " Path gets matched against tmpfile generation method, so should work without
@@ -211,3 +207,5 @@ function! buffest#loclistdo(cmd, ...)
   set filetype=buffestloclist
   edit!
 endfunction
+
+" vim:set fdm=marker:
