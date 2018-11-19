@@ -6,7 +6,7 @@ let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 
 
 " Register Mode Workarounds {{{
 
-function! buffest#RegFileIntoBuffer(file, modeAtWriting) abort
+function! buffest#editregfile(file, modeAtWriting) abort
   exec "edit! ".a:file
   set nofixeol noeol
   if a:modeAtWriting ==# 'V'
@@ -14,20 +14,20 @@ function! buffest#RegFileIntoBuffer(file, modeAtWriting) abort
   endif
 endfunction
 
-function! buffest#RegModeFromList(list) abort
+function! buffest#getregmode(list) abort
   if empty(a:list) || !empty(a:list[-1])
     return 'v'
   endif
   return 'V'
 endfunction
 
-function! buffest#Get_reg2list(regname) abort
+function! buffest#reg2list(regname) abort
   let processed = getreg(a:regname, 1, 1) + (getregtype(a:regname) ==# "V" ? [''] : [] )
   return processed
 endfunction
 
-function! buffest#Set_list2reg(regname, list) abort
-  let mode = buffest#RegModeFromList(a:list)
+function! buffest#list2reg(regname, list) abort
+  let mode = buffest#getregmode(a:list)
   if mode ==# 'V'
     " we have of course to strip that indicating newline again
     let internalRepr = a:list[0:-2]
@@ -38,13 +38,13 @@ function! buffest#Set_list2reg(regname, list) abort
   return getreg(a:regname)
 endfunction
 
-function! buffest#Readfile(file) abort
+function! buffest#readfile(file) abort
   return readfile(a:file, 'b')
 endfunction
 
-function! buffest#Writefile(content, file) abort
+function! buffest#writefile(content, file) abort
   call writefile(a:content, a:file, 'b')
-  return buffest#RegModeFromList(a:content)
+  return buffest#getregmode(a:content)
 endfunction
 
 " }}}
@@ -69,7 +69,7 @@ function! buffest#adapt_buffer(...) abort
     if overrideReg
       set nofixeol noeol
       w!
-      call buffest#Set_list2reg(matchingReg, buffest#Readfile(expand('%:p')))
+      call buffest#list2reg(matchingReg, buffest#readfile(expand('%:p')))
     endif
     call buffest#regdo(matchingReg, 'edit')
   endif
@@ -90,10 +90,10 @@ function! buffest#readreg()
   endif
   let l:regname = tolower(b:buffest_regname)
 
-  let writecontent = buffest#Get_reg2list(l:regname)
+  let writecontent = buffest#reg2list(l:regname)
   let file = expand('%:p')
-  let modeAtWriting = buffest#Writefile(writecontent, file)
-  call buffest#RegFileIntoBuffer(file, modeAtWriting)
+  let modeAtWriting = buffest#writefile(writecontent, file)
+  call buffest#editregfile(file, modeAtWriting)
 endfunction
 
 
@@ -102,7 +102,7 @@ function! buffest#writereg()
     return
   endif
   let l:regname = tolower(b:buffest_regname)
-  call buffest#Set_list2reg(l:regname, buffest#Readfile(expand('%:p')))
+  call buffest#list2reg(l:regname, buffest#readfile(expand('%:p')))
 endfunction
 
 function! buffest#regcomplete(...)
