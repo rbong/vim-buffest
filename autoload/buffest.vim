@@ -7,39 +7,39 @@ let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 
 " Register Mode Workarounds {{{
 
 fun! buffest#RegFileIntoBuffer(file, modeAtWriting) abort
-    exec "edit! ".a:file
-    set nofixeol noeol
-    if a:modeAtWriting ==# 'V'
-        normal Go
-    endif
+  exec "edit! ".a:file
+  set nofixeol noeol
+  if a:modeAtWriting ==# 'V'
+    normal Go
+  endif
 endf
 fun! buffest#RegModeFromList(list) abort
-    if empty(a:list) || !empty(a:list[-1])
-        return 'v'
-    endif
-    return 'V'
+  if empty(a:list) || !empty(a:list[-1])
+    return 'v'
+  endif
+  return 'V'
 endf
 fun! buffest#Get_reg2list(regname) abort
-    let processed = getreg(a:regname, 1, 1) + (getregtype(a:regname) ==# "V" ? [''] : [] )
-    return processed
+  let processed = getreg(a:regname, 1, 1) + (getregtype(a:regname) ==# "V" ? [''] : [] )
+  return processed
 endf
 fun! buffest#Set_list2reg(regname, list) abort
-    let mode = buffest#RegModeFromList(a:list)
-    if mode ==# 'V'
-        " we have of course to strip that indicating newline again
-        let internalRepr = a:list[0:-2]
-    else
-        let internalRepr = a:list
-    endif
-    call setreg(a:regname, internalRepr, mode)
-    return getreg(a:regname)
+  let mode = buffest#RegModeFromList(a:list)
+  if mode ==# 'V'
+    " we have of course to strip that indicating newline again
+    let internalRepr = a:list[0:-2]
+  else
+    let internalRepr = a:list
+  endif
+  call setreg(a:regname, internalRepr, mode)
+  return getreg(a:regname)
 endf
 fun! buffest#Readfile(file) abort
-    return readfile(a:file, 'b')
+  return readfile(a:file, 'b')
 endf
 fun! buffest#Writefile(content, file) abort
-    call writefile(a:content, a:file, 'b')
-    return buffest#RegModeFromList(a:content)
+  call writefile(a:content, a:file, 'b')
+  return buffest#RegModeFromList(a:content)
 endf
 
 " }}}
@@ -48,26 +48,26 @@ endf
 " Path gets matched against tmpfile generation method, so should work without
 " exta maintenance. glob pattern (in autocomd) could be centralized still.
 function! buffest#adapt_buffer(...) abort
-    let overrideReg = get(a:, 1, 0)
-    let filename = expand('%:p')
-    let matchingReg = ''
-    for reg in g:buffest_supported_registers
-        if buffest#tmpname('@'.reg) ==# filename
-            let matchingReg = reg
-        endif
-    endfor
-    if !empty(matchingReg)
-        let l:regname = tolower(matchingReg)
-        if index(g:buffest_supported_registers, l:regname) < 0
-          throw g:buffest_unsupported_register_error
-        endif
-        if overrideReg
-            set nofixeol noeol
-            w!
-            call buffest#Set_list2reg(matchingReg, buffest#Readfile(expand('%:p')))
-        endif
-        call buffest#regdo(matchingReg, 'edit')
+  let overrideReg = get(a:, 1, 0)
+  let filename = expand('%:p')
+  let matchingReg = ''
+  for reg in g:buffest_supported_registers
+    if buffest#tmpname('@'.reg) ==# filename
+      let matchingReg = reg
     endif
+  endfor
+  if !empty(matchingReg)
+    let l:regname = tolower(matchingReg)
+    if index(g:buffest_supported_registers, l:regname) < 0
+      throw g:buffest_unsupported_register_error
+    endif
+    if overrideReg
+      set nofixeol noeol
+      w!
+      call buffest#Set_list2reg(matchingReg, buffest#Readfile(expand('%:p')))
+    endif
+    call buffest#regdo(matchingReg, 'edit')
+  endif
 endf
 
 function! buffest#tmpname(name)
@@ -85,10 +85,10 @@ function! buffest#readreg()
   endif
   let l:regname = tolower(b:buffest_regname)
 
-let writecontent = buffest#Get_reg2list(l:regname)
-let file = expand('%:p')
-let modeAtWriting = buffest#Writefile(writecontent, file)
-call buffest#RegFileIntoBuffer(file, modeAtWriting)
+  let writecontent = buffest#Get_reg2list(l:regname)
+  let file = expand('%:p')
+  let modeAtWriting = buffest#Writefile(writecontent, file)
+  call buffest#RegFileIntoBuffer(file, modeAtWriting)
 endfunction
 
 
@@ -208,4 +208,4 @@ function! buffest#loclistdo(cmd, ...)
   edit!
 endfunction
 
-" vim:set fdm=marker:
+" vim:set et sw=2 ts=2 fdm=marker:
