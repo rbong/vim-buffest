@@ -2,7 +2,7 @@ let g:buffest_supported_registers = map(range(char2nr('a'),char2nr('z')),'nr2cha
 
 let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 
-let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
+let g:buffest_supported_listfields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
 
 let s:tmpdir = '/'.$TMP.'/buffest/'
 if $TMP == ''
@@ -92,7 +92,7 @@ function! buffest#sanitize_listitem(item)
     unlet l:item['bufnr']
   endif
   " do not promote invalid items to valid
-  if exists('b:buffest_list_fields') && index(b:buffest_list_fields, 'valid') < 0 && !l:item['valid']
+  if exists('b:buffest_listfields') && index(b:buffest_listfields, 'valid') < 0 && !l:item['valid']
     return v:null
   endif
   return l:item
@@ -103,13 +103,13 @@ function! buffest#listitem2string(item)
   if type(l:item) == v:t_none
     " item has been sanitized, return nothing
     let l:line = v:null
-  elseif !exists('b:buffest_list_fields') || !len(b:buffest_list_fields)
+  elseif !exists('b:buffest_listfields') || !len(b:buffest_listfields)
     " add a straight up string representation of the line
     let l:line = string(l:item)
   else
     " add a representation of the line with sorted fields
     let l:line = '{'
-    for l:field in b:buffest_list_fields
+    for l:field in b:buffest_listfields
       let l:line .= "'".l:field."': ".string(l:item[l:field]).', '
     endfor
     let l:line .= '}'
@@ -162,18 +162,18 @@ function buffest#writeloclist()
 endfunction
 
 function buffest#listfieldcomplete(...)
-  return g:buffest_supported_list_fields
+  return g:buffest_supported_listfields
 endfunction
 
 function buffest#filterlistfields(list)
-  return filter(uniq([] + a:list), 'index(g:buffest_supported_list_fields, v:val) >= 0')
+  return filter(uniq([] + a:list), 'index(g:buffest_supported_listfields, v:val) >= 0')
 endfunction
 
 function buffest#qflistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname(',q')
   " must create a new array for uniq to work
-  let b:buffest_list_fields = buffest#filterlistfields(a:000)
-  " force resetting the filetype to read the new buffest_list_fields
+  let b:buffest_listfields = buffest#filterlistfields(a:000)
+  " force resetting the filetype to read the new buffest_listfields
   set filetype=buffestqflist
   edit!
 endfunction
@@ -181,8 +181,8 @@ endfunction
 function buffest#loclistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname(',l')
   " must create a new array for uniq to work
-  let b:buffest_list_fields = buffest#filterlistfields(a:000)
-  " force resetting the filetype to read the new buffest_list_fields
+  let b:buffest_listfields = buffest#filterlistfields(a:000)
+  " force resetting the filetype to read the new buffest_listfields
   set filetype=buffestloclist
   edit!
 endfunction
