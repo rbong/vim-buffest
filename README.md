@@ -80,3 +80,7 @@ nnoremap <leader>bl <Plug>Loclistsplit
 ```
 
 Other commands can be mapped in the same way.
+
+## Contributing
+
+Before contributing please read [CONTRIBUTING.md](/CONTRIBUTING.md).
