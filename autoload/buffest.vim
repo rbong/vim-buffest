@@ -61,6 +61,10 @@ function! buffest#uniq_unsorted(list) abort
   return filter(copy(a:list), 'index(a:list, v:val, v:key + 1) == -1')
 endfunction
 
+function! buffest#intersection(src, ref) abort
+  return filter(a:src, 'index(a:ref, v:val) >= 0')
+endfunction
+
 " }}}
 
 " Registers {{{
@@ -134,7 +138,7 @@ endfunction
 
 function! buffest#filterlistfields(list) abort
   let l:list = buffest#uniq_unsorted(a:list)
-  return filter(l:list, 'index(g:buffest_supported_listfields, v:val) >= 0')
+  return buffest#intersection(l:list, g:buffest_supported_listfields)
 endfunction
 
 function! buffest#has_listfields() abort
