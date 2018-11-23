@@ -6,6 +6,8 @@ let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 
 let g:buffest_supported_listfields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
 
+let g:buffest_default_list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
+
 let s:tmpdir = '/'.$TMP.'/buffest/'
 if $TMP ==# ''
   let s:tmpdir = '/tmp/buffest/'
@@ -169,7 +171,7 @@ endfunction
 
 function! buffest#readlist(list) abort
   if !len(a:list)
-    let l:list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
+    let l:list = g:buffest_default_list
   else
     let l:list = a:list
   endif
