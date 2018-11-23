@@ -206,11 +206,11 @@ endfunction
 " Writing lists {{{
 
 function! buffest#writelistfile() abort
-  let contents = []
+  let l:contents = []
   for line in readfile(expand('%'))
-    execute 'let contents += ['.line.']'
+    execute 'let l:contents += ['.line.']'
   endfor
-  return contents
+  return l:contents
 endfunction
 
 " }}}
