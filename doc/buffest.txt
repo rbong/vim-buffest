@@ -15,12 +15,12 @@ Each of these commands takes one argument, the name of the register.
 Each command opens the register in the way indicated.
 Only the named registers, as well as {*}, {+}, and {"} are supported.
 
-*:Qflistsplit* *:Qflistvsplit* *Qflisttabedit* *Qflistedit*
+*:Qflistsplit* *:Qflistvsplit* *:Qflisttabedit* *:Qflistedit*
 
 Each of these commands open the quickfix list in the way indicated.
 These commands support |buffest-list-fields|.
 
-*:Loclistsplit* *:Loclistvsplit* *Loclisttabedit* *Locflistedit*
+*:Loclistsplit* *:Loclistvsplit* *:Loclisttabedit* *:Locflistedit*
 
 Each of these commands open the location list in the way indicated.
 These commands support |buffest-list-fields|.
