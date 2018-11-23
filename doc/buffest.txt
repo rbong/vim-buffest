@@ -9,7 +9,7 @@ COMMANDS                                                    *buffest-commands*
 All commands can be mapped using <Plug> and the name of the command.
 See |using-<Plug>|.
 
-*:Regsplit* *:Regvsplit* *:Regtabedit*
+*:Regsplit* *:Regvsplit* *:Regtabedit* *:Regedit*
 
 Each of these commands takes one argument, the name of the register.
 Each command opens the register in the way indicated.

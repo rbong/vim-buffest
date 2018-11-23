@@ -16,6 +16,7 @@ c@a
 :Regsplit a
 :Regvsplit a
 :Regtabedit a
+:Regedit a
 ```
 
 Repace `a` with `<register>` to edit that register.
