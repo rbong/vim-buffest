@@ -43,10 +43,15 @@ Normal updating: >
 Force update: >
   :e!
 
-Buffers will automatically write to the buffer or list.
+Buffers will automatically write to the register or list.
 
 Write buffer: >
   :w
+
+Write register in a specific mode (defaults to |linewise|): >
+  ggVG:w
+  ggvG:w
+  gg<C-V>G:w
 
 Write and exit: >
   :wq

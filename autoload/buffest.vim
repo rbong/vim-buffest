@@ -27,7 +27,7 @@ function! buffest#writereg()
     return
   endif
   let l:regname = tolower(b:buffest_regname)
-  call setreg(l:regname, readfile(expand('%')))
+  call setreg(l:regname, readfile(expand('%')), visualmode())
 endfunction
 
 function! buffest#regcomplete(...)
