@@ -146,7 +146,7 @@ function! buffest#has_listfields() abort
 endfunction
 
 function! buffest#has_listfield(field) abort
-  return !buffest#has_listfields() || index(b:buffest_listfields, a:field) > 0
+  return !buffest#has_listfields() || index(b:buffest_listfields, a:field) >= 0
 endfunction
 
 " }}}
