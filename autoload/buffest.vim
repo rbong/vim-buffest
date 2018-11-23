@@ -57,6 +57,10 @@ function! buffest#dict2sortedstring(dict, fields) abort
   return l:string
 endfunction
 
+function! buffest#uniq_unsorted(list) abort
+  return filter(copy(a:list), 'index(a:list, v:val, v:key + 1) == -1')
+endfunction
+
 " }}}
 
 " Registers {{{
@@ -129,7 +133,8 @@ function! buffest#listfieldcomplete(...) abort
 endfunction
 
 function! buffest#filterlistfields(list) abort
-  return filter(uniq([] + a:list), 'index(g:buffest_supported_listfields, v:val) >= 0')
+  let l:list = buffest#uniq_unsorted(a:list)
+  return filter(l:list, 'index(g:buffest_supported_listfields, v:val) >= 0')
 endfunction
 
 function! buffest#has_listfields() abort
@@ -214,7 +219,6 @@ endfunction
 
 function! buffest#qflistdo(cmd, ...) abort
   exec a:cmd . ' ' . buffest#tmpname(',q')
-  " must create a new array for uniq to work
   let b:buffest_listfields = buffest#filterlistfields(a:000)
   " force resetting the filetype to read the new buffest_listfields
   set filetype=buffestqflist
@@ -235,7 +239,6 @@ endfunction
 
 function! buffest#loclistdo(cmd, ...) abort
   exec a:cmd . ' ' . buffest#tmpname(',l')
-  " must create a new array for uniq to work
   let b:buffest_listfields = buffest#filterlistfields(a:000)
   " force resetting the filetype to read the new buffest_listfields
   set filetype=buffestloclist
