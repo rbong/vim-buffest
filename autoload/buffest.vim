@@ -58,7 +58,6 @@ function! buffest#readreg()
   if l:regname == v:null
     return
   endif
-  let b:buffest_regname = l:regname
   call writefile(getreg(l:regname, 1, 1), l:filename)
   edit!
 endfunction
