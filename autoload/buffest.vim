@@ -5,7 +5,7 @@ let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
 
 let s:tmpdir = '/'.$TMP.'/buffest/'
-if $TMP == ""
+if $TMP == ''
   let s:tmpdir = '/tmp/buffest/'
 endif
 
