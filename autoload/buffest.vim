@@ -17,6 +17,8 @@ function! buffest#init_au()
   augroup buffestfiletype
     autocmd!
     exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'@* set filetype=buffestreg'
+    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.',q set filetype=buffestqflist'
+    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.',l set filetype=buffestloclist'
   augroup END
 endfunction
 
@@ -164,6 +166,7 @@ function buffest#qflistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname(',q')
   " must create a new array for uniq to work
   let b:buffest_list_fields = buffest#filterlistfields(a:000)
+  " force resetting the filetype to read the new buffest_list_fields
   set filetype=buffestqflist
   edit!
 endfunction
@@ -172,6 +175,7 @@ function buffest#loclistdo(cmd, ...)
   exec a:cmd . ' ' . buffest#tmpname(',l')
   " must create a new array for uniq to work
   let b:buffest_list_fields = buffest#filterlistfields(a:000)
+  " force resetting the filetype to read the new buffest_list_fields
   set filetype=buffestloclist
   edit!
 endfunction
