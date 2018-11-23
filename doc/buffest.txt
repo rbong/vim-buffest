@@ -48,10 +48,10 @@ Buffers will automatically write to the register or list.
 Write buffer: >
   :w
 
-Write register in a specific mode (defaults to |linewise|): >
-  ggVG:w
-  ggvG:w
-  gg<C-V>G:w
+Write register in a specific visual mode (defaults to |linewise|): >
+  V:<C-U>w
+  v:<C-U>w
+  <C-V>:<C-U>w
 
 Write and exit: >
   :wq
