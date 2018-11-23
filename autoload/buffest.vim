@@ -21,21 +21,45 @@ function! buffest#tmpname(name)
   return s:tmpdir.a:name
 endfunction
 
+function! buffest#regexesc(string)
+  return escape(a:string, '\\^$*+?.()|[]{}')
+endfunction
+
+function! buffest#validreg(regname)
+  return index(g:buffest_supported_registers, a:regname) >= 0
+endfunction
+
+function! buffest#get_regname(filename)
+  let l:pattern = buffest#regexesc(s:tmpdir).'\/*@\zs.\?$'
+  let l:match = matchstrpos(a:filename, l:pattern)
+  if l:match[1] < 0
+    return v:null
+  endif
+  let l:regname = tolower(l:match[0] == '' ? '"' : l:match[0])
+  if !buffest#validreg(l:regname)
+    return v:null
+  endif
+  return l:regname
+endfunction
+
 function! buffest#readreg()
-  if !exists('b:buffest_regname')
+  let l:filename = expand('%:p')
+  let l:regname = buffest#get_regname(l:filename)
+  if l:regname == v:null
     return
   endif
-  let l:regname = tolower(b:buffest_regname)
-  call writefile(getreg(l:regname, 1, 1), expand('%:p'))
+  let b:buffest_regname = l:regname
+  call writefile(getreg(l:regname, 1, 1), l:filename)
   edit!
 endfunction
 
 function! buffest#writereg()
-  if !exists('b:buffest_regname')
+  let l:filename = expand('%:p')
+  let l:regname = buffest#get_regname(l:filename)
+  if l:regname == v:null
     return
   endif
-  let l:regname = tolower(b:buffest_regname)
-  call setreg(l:regname, readfile(expand('%')), visualmode())
+  call setreg(l:regname, readfile(l:filename), visualmode())
 endfunction
 
 function! buffest#regcomplete(...)
@@ -44,11 +68,10 @@ endfunction
 
 function! buffest#regdo(regname, cmd)
   let l:regname = tolower(a:regname)
-  if index(g:buffest_supported_registers, l:regname) < 0
+  if !buffest#validreg(l:regname)
     throw g:buffest_unsupported_register_error
   endif
   exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
-  let b:buffest_regname = l:regname
   set filetype=buffestreg
   edit!
 endfunction
