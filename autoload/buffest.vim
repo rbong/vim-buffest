@@ -167,7 +167,7 @@ function! buffest#sanitize_listitem(item) abort
   return l:item
 endfunction
 
-function! buffest#listitem2string(item) abort
+function! buffest#parse_listitem(item) abort
   let l:item = buffest#sanitize_listitem(a:item)
   if type(l:item) == v:t_none
     " item has been sanitized, return nothing
@@ -191,7 +191,7 @@ function! buffest#readlist(list) abort
 
   let l:filelist = []
   for l:item in l:list
-    let l:line = buffest#listitem2string(l:item)
+    let l:line = buffest#parse_listitem(l:item)
     if l:line != v:null
       let l:filelist += [l:line]
     endif
