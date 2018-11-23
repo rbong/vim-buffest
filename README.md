@@ -29,6 +29,7 @@ c,q
 :Qflistsplit
 :Qflistvsplit
 :Qflisttabedit
+:Qflistedit
 ```
 
 **Opening the location list**
@@ -38,6 +39,7 @@ c,l
 :Loclistsplit
 :Loclistvsplit
 :Loclisttabedit
+:Loclistedit
 ```
 
 **Opening lists with specific fields shown**

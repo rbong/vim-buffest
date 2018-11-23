@@ -15,6 +15,8 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Qflistvsplit call buffest#qflistdo('vsplit', <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Qflisttabedit call buffest#qflistdo('tabedit', <f-args>)
+command! -complete=customlist,buffest#listfieldcomplete -nargs=*
+      \ Qflistedit call buffest#qflistdo('edit', <f-args>)
 
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Loclistsplit call buffest#loclistdo('aboveleft split', <f-args>)
@@ -22,6 +24,8 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Loclistvsplit call buffest#loclistdo('aboveleft vsplit', <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Loclisttabedit call buffest#loclistdo('tabedit', <f-args>)
+command! -complete=customlist,buffest#listfieldcomplete -nargs=*
+      \ Loclistedit call buffest#loclistdo('edit', <f-args>)
 
 " }}}
 
@@ -61,6 +65,10 @@ if hasmapto('<Plug>Qflisttabedit')
   nnoremap <Plug>Qflisttabedit :Qflisttabedit<cr>
 endif
 
+if hasmapto('<Plug>Qflistedit')
+  nnoremap <Plug>Qflistedit :Qflistedit<cr>
+endif
+
 if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') == ''
   map <unique> c,l <Plug>Loclistsplit
 endif
@@ -73,6 +81,10 @@ endif
 
 if hasmapto('<Plug>Loclisttabedit')
   nnoremap <Plug>Loclisttabedit :Loclisttabedit<cr>
+endif
+
+if hasmapto('<Plug>Loclistedit')
+  nnoremap <Plug>Loclistedit :Loclistedit<cr>
 endif
 
 " }}}
