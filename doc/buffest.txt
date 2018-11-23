@@ -24,6 +24,7 @@ These commands support |buffest-list-fields|.
 
 Each of these commands open the location list in the way indicated.
 These commands support |buffest-list-fields|.
+The window always splits using |:aboveleft| and sets the list to |winnr()| + 1.
 
 LIST FIELDS                                              *buffest-list-fields*
 

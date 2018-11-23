@@ -17,9 +17,9 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Qflisttabedit call buffest#qflistdo('tabedit', <f-args>)
 
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistsplit call buffest#loclistdo('split', <f-args>)
+      \ Loclistsplit call buffest#loclistdo('aboveleft split', <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistvsplit call buffest#loclistdo('vsplit', <f-args>)
+      \ Loclistvsplit call buffest#loclistdo('aboveleft vsplit', <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Loclisttabedit call buffest#loclistdo('tabedit', <f-args>)
 
