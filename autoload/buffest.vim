@@ -141,6 +141,10 @@ function! buffest#has_listfields() abort
   return exists('b:buffest_listfields') && len(b:buffest_listfields)
 endfunction
 
+function! buffest#has_listfield(field) abort
+  return buffest#has_listfields() && index(b:buffest_listfields, a:field) > 0
+endfunction
+
 " }}}
 
 " Reading lists {{{
@@ -153,7 +157,7 @@ function! buffest#sanitize_listitem(item) abort
     unlet l:item['bufnr']
   endif
   " do not promote invalid items to valid
-  if buffest#has_listfields() && index(b:buffest_listfields, 'valid') < 0 && !l:item['valid']
+  if buffest#has_listfields() && !buffest#has_listfield('valid') && !l:item['valid']
     return v:null
   endif
   return l:item
