@@ -4,13 +4,21 @@ let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 
 let g:buffest_supported_list_fields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
 
+let s:tmpdir = '/'.$TMP.'/buffest/'
+if $TMP == ""
+  let s:tmpdir = '/tmp/buffest/'
+endif
+
+function! buffest#init_tmpdir()
+  call mkdir(s:tmpdir, 'p')
+endfunction
+
+function! buffest#init()
+  call buffest#init_tmpdir()
+endfunction
+
 function! buffest#tmpname(name)
-  let l:tmp = '/'.$TMP.'/buffest/'
-  if $TMP == ""
-    let l:tmp = '/tmp/buffest/'
-  endif
-  call mkdir(l:tmp, 'p')
-  return l:tmp.a:name
+  return s:tmpdir.a:name
 endfunction
 
 function! buffest#readreg()
@@ -137,3 +145,5 @@ function buffest#loclistdo(cmd, ...)
   set filetype=buffestloclist
   edit!
 endfunction
+
+call buffest#init()
