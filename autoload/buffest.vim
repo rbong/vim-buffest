@@ -45,6 +45,16 @@ function! buffest#regexesc(string) abort
   return escape(a:string, '\\^$*+?.()|[]{}')
 endfunction
 
+function! buffest#dict2sortedstring(dict, fields) abort
+  let l:string = '{'
+  for l:field in a:fields
+    let l:string .= "'".l:field."': ".string(a:dict[l:field]).', '
+  endfor
+  let l:string .= '}'
+  let l:string = substitute(l:string, ', }$', '}', '')
+  return l:string
+endfunction
+
 " }}}
 
 " Registers {{{
@@ -148,16 +158,11 @@ function! buffest#listitem2string(item) abort
     " item has been sanitized, return nothing
     let l:line = v:null
   elseif !buffest#has_listfields()
-    " add a straight up string representation of the line
+    " return an unfiltered string representation of the line
     let l:line = string(l:item)
   else
-    " add a representation of the line with sorted fields
-    let l:line = '{'
-    for l:field in b:buffest_listfields
-      let l:line .= "'".l:field."': ".string(l:item[l:field]).', '
-    endfor
-    let l:line .= '}'
-    let l:line = substitute(l:line, ', }$', '}', '')
+    " return a filtered string representation of the line
+    let l:line = string(buffest#dict2sortedstring(l:item, b:buffest_listfields))
   endif
   return l:line
 endfunction
