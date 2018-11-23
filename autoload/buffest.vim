@@ -13,8 +13,16 @@ function! buffest#init_tmpdir()
   call mkdir(s:tmpdir, 'p')
 endfunction
 
+function! buffest#init_au()
+  augroup buffestfiletype
+    autocmd!
+    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'@* set filetype=buffestreg'
+  augroup END
+endfunction
+
 function! buffest#init()
   call buffest#init_tmpdir()
+  call buffest#init_au()
 endfunction
 
 function! buffest#tmpname(name)
@@ -72,7 +80,6 @@ function! buffest#regdo(regname, cmd)
     throw g:buffest_unsupported_register_error
   endif
   exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
-  set filetype=buffestreg
   edit!
 endfunction
 
