@@ -151,7 +151,7 @@ function buffest#writeqflist()
 endfunction
 
 function buffest#writeloclist()
-  call setloclist('.', buffest#writelistfile())
+  call setloclist(winnr() + 1, buffest#writelistfile())
 endfunction
 
 function buffest#listfieldcomplete(...)
