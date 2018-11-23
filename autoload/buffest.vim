@@ -188,3 +188,5 @@ function buffest#loclistdo(cmd, ...)
 endfunction
 
 call buffest#init()
+
+" vim:set et sw=2 ts=2 fdm=marker:
