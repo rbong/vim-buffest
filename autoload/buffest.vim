@@ -173,7 +173,7 @@ function! buffest#listitem2string(item) abort
     let l:line = string(l:item)
   else
     " return a filtered string representation of the line
-    let l:line = string(buffest#dict2sortedstring(l:item, b:buffest_listfields))
+    let l:line = buffest#dict2sortedstring(l:item, b:buffest_listfields)
   endif
   return l:line
 endfunction
