@@ -1,3 +1,5 @@
+" Variables {{{
+
 let g:buffest_supported_registers = map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)') + ['"', '*', '+']
 
 let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
@@ -8,6 +10,10 @@ let s:tmpdir = '/'.$TMP.'/buffest/'
 if $TMP ==# ''
   let s:tmpdir = '/tmp/buffest/'
 endif
+
+" }}}
+
+" Initialization {{{
 
 function! buffest#init_tmpdir() abort
   call mkdir(s:tmpdir, 'p')
@@ -27,6 +33,10 @@ function! buffest#init() abort
   call buffest#init_au()
 endfunction
 
+" }}}
+
+" General utilities {{{
+
 function! buffest#tmpname(name) abort
   return s:tmpdir.a:name
 endfunction
@@ -34,6 +44,12 @@ endfunction
 function! buffest#regexesc(string) abort
   return escape(a:string, '\\^$*+?.()|[]{}')
 endfunction
+
+" }}}
+
+" Registers {{{
+
+" Register utilities {{{
 
 function! buffest#validreg(regname) abort
   return index(g:buffest_supported_registers, a:regname) >= 0
@@ -51,6 +67,23 @@ function! buffest#get_regname(filename) abort
   endif
   return l:regname
 endfunction
+
+function! buffest#regcomplete(...) abort
+  return g:buffest_supported_registers
+endfunction
+
+function! buffest#regdo(regname, cmd) abort
+  let l:regname = tolower(a:regname)
+  if !buffest#validreg(l:regname)
+    throw g:buffest_unsupported_register_error
+  endif
+  exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
+  edit!
+endfunction
+
+" }}}
+
+" Reading/writing registers {{{
 
 function! buffest#readreg() abort
   let l:filename = expand('%:p')
@@ -71,18 +104,25 @@ function! buffest#writereg() abort
   call setreg(l:regname, readfile(l:filename), visualmode())
 endfunction
 
-function! buffest#regcomplete(...) abort
-  return g:buffest_supported_registers
+" }}}
+
+" }}}
+
+" Lists {{{
+
+" List utilities {{{
+
+function! buffest#listfieldcomplete(...) abort
+  return g:buffest_supported_listfields
 endfunction
 
-function! buffest#regdo(regname, cmd) abort
-  let l:regname = tolower(a:regname)
-  if !buffest#validreg(l:regname)
-    throw g:buffest_unsupported_register_error
-  endif
-  exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
-  edit!
+function! buffest#filterlistfields(list) abort
+  return filter(uniq([] + a:list), 'index(g:buffest_supported_listfields, v:val) >= 0')
 endfunction
+
+" }}}
+
+" Reading lists {{{
 
 function! buffest#sanitize_listitem(item) abort
   let l:item = a:item
@@ -137,13 +177,9 @@ function! buffest#readlist(list) abort
   edit!
 endfunction
 
-function! buffest#readqflist() abort
-  return buffest#readlist(getqflist())
-endfunction
+" }}}
 
-function! buffest#readloclist() abort
-  return buffest#readlist(getloclist('.'))
-endfunction
+" Writing lists {{{
 
 function! buffest#writelistfile() abort
   let contents = []
@@ -153,20 +189,16 @@ function! buffest#writelistfile() abort
   return contents
 endfunction
 
+" }}}
+
+" Quickfix list {{{
+
+function! buffest#readqflist() abort
+  return buffest#readlist(getqflist())
+endfunction
+
 function! buffest#writeqflist() abort
   call setqflist(buffest#writelistfile())
-endfunction
-
-function! buffest#writeloclist() abort
-  call setloclist(winnr() + 1, buffest#writelistfile())
-endfunction
-
-function! buffest#listfieldcomplete(...) abort
-  return g:buffest_supported_listfields
-endfunction
-
-function! buffest#filterlistfields(list) abort
-  return filter(uniq([] + a:list), 'index(g:buffest_supported_listfields, v:val) >= 0')
 endfunction
 
 function! buffest#qflistdo(cmd, ...) abort
@@ -178,6 +210,18 @@ function! buffest#qflistdo(cmd, ...) abort
   edit!
 endfunction
 
+" }}}
+
+" Location list {{{
+
+function! buffest#readloclist() abort
+  return buffest#readlist(getloclist('.'))
+endfunction
+
+function! buffest#writeloclist() abort
+  call setloclist(winnr() + 1, buffest#writelistfile())
+endfunction
+
 function! buffest#loclistdo(cmd, ...) abort
   exec a:cmd . ' ' . buffest#tmpname(',l')
   " must create a new array for uniq to work
@@ -186,6 +230,10 @@ function! buffest#loclistdo(cmd, ...) abort
   set filetype=buffestloclist
   edit!
 endfunction
+
+" }}}
+
+" }}}
 
 call buffest#init()
 
