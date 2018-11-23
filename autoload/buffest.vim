@@ -84,14 +84,6 @@ function! buffest#regdo(regname, cmd)
   edit!
 endfunction
 
-function! buffest#escseparator(string)
-  return substitute(a:string, ':', '\\:', 'g')
-endfunction
-
-function! buffest#unescseparator(string)
-  return substitute(a:string, '\\:', ':', 'g')
-endfunction
-
 function! buffest#readlist(list)
   if !len(a:list)
     let l:list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
@@ -140,7 +132,7 @@ endfunction
 function buffest#writelistfile()
   let contents = []
   for line in readfile(expand('%'))
-    execute 'let contents += ['.buffest#unescseparator(line).']'
+    execute 'let contents += ['.line.']'
   endfor
   return contents
 endfunction
