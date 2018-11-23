@@ -105,6 +105,11 @@ function! buffest#readlist(list)
       " add a straight up string representation of the line
       let l:line = string(l:item)
     else
+      " do not promote uneditable lines to editable
+      if index(b:buffest_list_fields, 'valid') < 0 && !l:item['valid']
+        continue
+      endif
+
       " add a representation of the line with sorted fields
       let l:line = '{'
       for l:field in b:buffest_list_fields

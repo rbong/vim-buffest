@@ -34,6 +34,15 @@ The unlisted fields will be lost.
 
 The fields will be shown sorted.
 
+The supported fields are based on |getqflist()|, |setqflist()|, |setloclist()|, and |getloclist()|.
+The supported fields are as follows:
+'filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type',  and 'valid'.
+
+If 'valid' is excluded from the fields, invalid items will be filtered.
+
+Other fields excluded will result in the field reverting to its default value.
+Notably, if 'vcol' is excluded from the fields, all 'col' fields will be converted to byte index.
+
 USING BUFFERS                                                *buffest-buffers*
 
 On re-opening a buffer it will automatically update from the register or list.
