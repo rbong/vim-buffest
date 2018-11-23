@@ -120,6 +120,10 @@ function! buffest#filterlistfields(list) abort
   return filter(uniq([] + a:list), 'index(g:buffest_supported_listfields, v:val) >= 0')
 endfunction
 
+function! buffest#has_listfields() abort
+  return exists('b:buffest_listfields') && len(b:buffest_listfields)
+endfunction
+
 " }}}
 
 " Reading lists {{{
@@ -132,7 +136,7 @@ function! buffest#sanitize_listitem(item) abort
     unlet l:item['bufnr']
   endif
   " do not promote invalid items to valid
-  if exists('b:buffest_listfields') && index(b:buffest_listfields, 'valid') < 0 && !l:item['valid']
+  if buffest#has_listfields() && index(b:buffest_listfields, 'valid') < 0 && !l:item['valid']
     return v:null
   endif
   return l:item
@@ -143,7 +147,7 @@ function! buffest#listitem2string(item) abort
   if type(l:item) == v:t_none
     " item has been sanitized, return nothing
     let l:line = v:null
-  elseif !exists('b:buffest_listfields') || !len(b:buffest_listfields)
+  elseif !buffest#has_listfields()
     " add a straight up string representation of the line
     let l:line = string(l:item)
   else
