@@ -84,6 +84,40 @@ function! buffest#regdo(regname, cmd)
   edit!
 endfunction
 
+function! buffest#sanitize_listitem(item)
+  let l:item = a:item
+  " bufnr is not useful to edit for a human, it is converted to filename
+  if exists("l:item['bufnr']")
+    let l:item['filename'] = bufname(l:item['bufnr'])
+    unlet l:item['bufnr']
+  endif
+  " do not promote invalid items to valid
+  if exists('b:buffest_list_fields') && index(b:buffest_list_fields, 'valid') < 0 && !l:item['valid']
+    return v:null
+  endif
+  return l:item
+endfunction
+
+function! buffest#listitem2string(item)
+  let l:item = buffest#sanitize_listitem(a:item)
+  if type(l:item) == v:t_none
+    " item has been sanitized, return nothing
+    let l:line = v:null
+  elseif !exists('b:buffest_list_fields') || !len(b:buffest_list_fields)
+    " add a straight up string representation of the line
+    let l:line = string(l:item)
+  else
+    " add a representation of the line with sorted fields
+    let l:line = '{'
+    for l:field in b:buffest_list_fields
+      let l:line .= "'".l:field."': ".string(l:item[l:field]).', '
+    endfor
+    let l:line .= '}'
+    let l:line = substitute(l:line, ', }$', '}', '')
+  endif
+  return l:line
+endfunction
+
 function! buffest#readlist(list)
   if !len(a:list)
     let l:list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
@@ -91,38 +125,15 @@ function! buffest#readlist(list)
     let l:list = a:list
   endif
 
-  " build the list to write to the file
   let l:filelist = []
   for l:item in l:list
-    " clean up the item
-    if exists("l:item['bufnr']")
-      let l:item['filename'] = bufname(l:item['bufnr'])
-      unlet l:item['bufnr']
+    let l:line = buffest#listitem2string(l:item)
+    if l:line != v:null
+      let l:filelist += [l:line]
     endif
-
-    " calculate the line
-    if !exists('b:buffest_list_fields') || !len(b:buffest_list_fields)
-      " add a straight up string representation of the line
-      let l:line = string(l:item)
-    else
-      " do not promote uneditable lines to editable
-      if index(b:buffest_list_fields, 'valid') < 0 && !l:item['valid']
-        continue
-      endif
-
-      " add a representation of the line with sorted fields
-      let l:line = '{'
-      for l:field in b:buffest_list_fields
-        let l:line .= "'".l:field."': ".string(l:item[l:field]).", "
-      endfor
-      let l:line .= '}'
-      let l:line = substitute(l:line, ", }$", "}", "")
-    endif
-
-    let l:filelist += [l:line]
   endfor
-
   call writefile(l:filelist, expand('%:p'))
+
   edit!
 endfunction
 
