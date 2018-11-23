@@ -40,7 +40,7 @@ function! buffest#validreg(regname)
 endfunction
 
 function! buffest#get_regname(filename)
-  let l:pattern = buffest#regexesc(s:tmpdir).'\/*@\zs.\?$'
+  let l:pattern = buffest#regexesc(s:tmpdir).'@\zs.\?$'
   let l:match = matchstrpos(a:filename, l:pattern)
   if l:match[1] < 0
     return v:null
