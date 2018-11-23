@@ -146,7 +146,7 @@ function! buffest#has_listfields() abort
 endfunction
 
 function! buffest#has_listfield(field) abort
-  return buffest#has_listfields() && index(b:buffest_listfields, a:field) > 0
+  return !buffest#has_listfields() || index(b:buffest_listfields, a:field) > 0
 endfunction
 
 " }}}
@@ -161,7 +161,7 @@ function! buffest#sanitize_listitem(item) abort
     unlet l:item['bufnr']
   endif
   " do not promote invalid items to valid
-  if buffest#has_listfields() && !buffest#has_listfield('valid') && !l:item['valid']
+  if !buffest#has_listfield('valid') && !l:item['valid']
     return v:null
   endif
   return l:item
