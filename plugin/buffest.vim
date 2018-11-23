@@ -31,7 +31,7 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
 
 " Bindings {{{
 
-if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') == ''
+if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') ==# ''
   map <unique> c@ <Plug>Regsplit
   " Only map this if the defaul mapping is used
   nnoremap <unique> c@@ :Regsplit "<cr>
@@ -51,7 +51,7 @@ if hasmapto('<Plug>Regedit')
   nnoremap <Plug>Regedit  :execute 'Regedit '.nr2char(getchar())<cr>
 endif
 
-if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') == ''
+if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') ==# ''
   map <unique> c,q <Plug>Qflistsplit
 endif
 
@@ -69,7 +69,7 @@ if hasmapto('<Plug>Qflistedit')
   nnoremap <Plug>Qflistedit :Qflistedit<cr>
 endif
 
-if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') == ''
+if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') ==# ''
   map <unique> c,l <Plug>Loclistsplit
 endif
 

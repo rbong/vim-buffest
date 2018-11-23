@@ -5,15 +5,15 @@ let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 let g:buffest_supported_listfields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
 
 let s:tmpdir = '/'.$TMP.'/buffest/'
-if $TMP == ''
+if $TMP ==# ''
   let s:tmpdir = '/tmp/buffest/'
 endif
 
-function! buffest#init_tmpdir()
+function! buffest#init_tmpdir() abort
   call mkdir(s:tmpdir, 'p')
 endfunction
 
-function! buffest#init_au()
+function! buffest#init_au() abort
   augroup buffestfiletype
     autocmd!
     exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'@* set filetype=buffestreg'
@@ -22,37 +22,37 @@ function! buffest#init_au()
   augroup END
 endfunction
 
-function! buffest#init()
+function! buffest#init() abort
   call buffest#init_tmpdir()
   call buffest#init_au()
 endfunction
 
-function! buffest#tmpname(name)
+function! buffest#tmpname(name) abort
   return s:tmpdir.a:name
 endfunction
 
-function! buffest#regexesc(string)
+function! buffest#regexesc(string) abort
   return escape(a:string, '\\^$*+?.()|[]{}')
 endfunction
 
-function! buffest#validreg(regname)
+function! buffest#validreg(regname) abort
   return index(g:buffest_supported_registers, a:regname) >= 0
 endfunction
 
-function! buffest#get_regname(filename)
+function! buffest#get_regname(filename) abort
   let l:pattern = buffest#regexesc(s:tmpdir).'@\zs.\?$'
   let l:match = matchstrpos(a:filename, l:pattern)
   if l:match[1] < 0
     return v:null
   endif
-  let l:regname = tolower(l:match[0] == '' ? '"' : l:match[0])
+  let l:regname = tolower(l:match[0] ==# '' ? '"' : l:match[0])
   if !buffest#validreg(l:regname)
     return v:null
   endif
   return l:regname
 endfunction
 
-function! buffest#readreg()
+function! buffest#readreg() abort
   let l:filename = expand('%:p')
   let l:regname = buffest#get_regname(l:filename)
   if l:regname == v:null
@@ -62,7 +62,7 @@ function! buffest#readreg()
   edit!
 endfunction
 
-function! buffest#writereg()
+function! buffest#writereg() abort
   let l:filename = expand('%:p')
   let l:regname = buffest#get_regname(l:filename)
   if l:regname == v:null
@@ -71,11 +71,11 @@ function! buffest#writereg()
   call setreg(l:regname, readfile(l:filename), visualmode())
 endfunction
 
-function! buffest#regcomplete(...)
+function! buffest#regcomplete(...) abort
   return g:buffest_supported_registers
 endfunction
 
-function! buffest#regdo(regname, cmd)
+function! buffest#regdo(regname, cmd) abort
   let l:regname = tolower(a:regname)
   if !buffest#validreg(l:regname)
     throw g:buffest_unsupported_register_error
@@ -84,7 +84,7 @@ function! buffest#regdo(regname, cmd)
   edit!
 endfunction
 
-function! buffest#sanitize_listitem(item)
+function! buffest#sanitize_listitem(item) abort
   let l:item = a:item
   " bufnr is not useful to edit for a human, it is converted to filename
   if exists("l:item['bufnr']")
@@ -98,7 +98,7 @@ function! buffest#sanitize_listitem(item)
   return l:item
 endfunction
 
-function! buffest#listitem2string(item)
+function! buffest#listitem2string(item) abort
   let l:item = buffest#sanitize_listitem(a:item)
   if type(l:item) == v:t_none
     " item has been sanitized, return nothing
@@ -118,7 +118,7 @@ function! buffest#listitem2string(item)
   return l:line
 endfunction
 
-function! buffest#readlist(list)
+function! buffest#readlist(list) abort
   if !len(a:list)
     let l:list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
   else
@@ -137,15 +137,15 @@ function! buffest#readlist(list)
   edit!
 endfunction
 
-function! buffest#readqflist()
+function! buffest#readqflist() abort
   return buffest#readlist(getqflist())
 endfunction
 
-function! buffest#readloclist()
+function! buffest#readloclist() abort
   return buffest#readlist(getloclist('.'))
 endfunction
 
-function buffest#writelistfile()
+function! buffest#writelistfile() abort
   let contents = []
   for line in readfile(expand('%'))
     execute 'let contents += ['.line.']'
@@ -153,23 +153,23 @@ function buffest#writelistfile()
   return contents
 endfunction
 
-function buffest#writeqflist()
+function! buffest#writeqflist() abort
   call setqflist(buffest#writelistfile())
 endfunction
 
-function buffest#writeloclist()
+function! buffest#writeloclist() abort
   call setloclist(winnr() + 1, buffest#writelistfile())
 endfunction
 
-function buffest#listfieldcomplete(...)
+function! buffest#listfieldcomplete(...) abort
   return g:buffest_supported_listfields
 endfunction
 
-function buffest#filterlistfields(list)
+function! buffest#filterlistfields(list) abort
   return filter(uniq([] + a:list), 'index(g:buffest_supported_listfields, v:val) >= 0')
 endfunction
 
-function buffest#qflistdo(cmd, ...)
+function! buffest#qflistdo(cmd, ...) abort
   exec a:cmd . ' ' . buffest#tmpname(',q')
   " must create a new array for uniq to work
   let b:buffest_listfields = buffest#filterlistfields(a:000)
@@ -178,7 +178,7 @@ function buffest#qflistdo(cmd, ...)
   edit!
 endfunction
 
-function buffest#loclistdo(cmd, ...)
+function! buffest#loclistdo(cmd, ...) abort
   exec a:cmd . ' ' . buffest#tmpname(',l')
   " must create a new array for uniq to work
   let b:buffest_listfields = buffest#filterlistfields(a:000)
