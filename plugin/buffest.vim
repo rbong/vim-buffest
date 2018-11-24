@@ -36,61 +36,61 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
 if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') ==# ''
   map <unique> c@ <Plug>Regsplit
   " Only map this if the defaul mapping is used
-  nnoremap <unique> c@@ :Regsplit "<cr>
+  nnoremap <unique> c@@ :silent Regsplit "<cr>
 endif
 
-nnoremap <Plug>Regsplit :execute 'Regsplit '.nr2char(getchar())<cr>
+nnoremap <Plug>Regsplit :silent execute 'Regsplit '.nr2char(getchar())<cr>
 
 if hasmapto('<Plug>Regvsplit')
-  nnoremap <Plug>Regvsplit :execute 'Regvsplit '.nr2char(getchar())<cr>
+  nnoremap <Plug>Regvsplit :silent execute 'Regvsplit '.nr2char(getchar())<cr>
 endif
 
 if hasmapto('<Plug>Regtabedit')
-  nnoremap <Plug>Regtabedit :execute 'Regtabedit '.nr2char(getchar())<cr>
+  nnoremap <Plug>Regtabedit :silent execute 'Regtabedit '.nr2char(getchar())<cr>
 endif
 
 if hasmapto('<Plug>Regedit')
-  nnoremap <Plug>Regedit  :execute 'Regedit '.nr2char(getchar())<cr>
+  nnoremap <Plug>Regedit  :silent execute 'Regedit '.nr2char(getchar())<cr>
 endif
 
 if hasmapto('<Plug>Regpedit')
-  nnoremap <Plug>Regpedit  :execute 'Regpedit '.nr2char(getchar())<cr>
+  nnoremap <Plug>Regpedit  :silent execute 'Regpedit '.nr2char(getchar())<cr>
 endif
 
 if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') ==# ''
   map <unique> c,q <Plug>Qflistsplit
 endif
 
-nnoremap <Plug>Qflistsplit :Qflistsplit<cr>
+nnoremap <Plug>Qflistsplit :silent Qflistsplit<cr>
 
 if hasmapto('<Plug>Qflistvsplit')
-  nnoremap <Plug>Qflistvsplit :Qflistvsplit<cr>
+  nnoremap <Plug>Qflistvsplit :silent Qflistvsplit<cr>
 endif
 
 if hasmapto('<Plug>Qflisttabedit')
-  nnoremap <Plug>Qflisttabedit :Qflisttabedit<cr>
+  nnoremap <Plug>Qflisttabedit :silent Qflisttabedit<cr>
 endif
 
 if hasmapto('<Plug>Qflistedit')
-  nnoremap <Plug>Qflistedit :Qflistedit<cr>
+  nnoremap <Plug>Qflistedit :silent Qflistedit<cr>
 endif
 
 if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') ==# ''
   map <unique> c,l <Plug>Loclistsplit
 endif
 
-nnoremap <Plug>Loclistsplit :Loclistsplit<cr>
+nnoremap <Plug>Loclistsplit :silent Loclistsplit<cr>
 
 if hasmapto('<Plug>Loclistvsplit')
-  nnoremap <Plug>Loclistvsplit :Loclistvsplit<cr>
+  nnoremap <Plug>Loclistvsplit :silent Loclistvsplit<cr>
 endif
 
 if hasmapto('<Plug>Loclisttabedit')
-  nnoremap <Plug>Loclisttabedit :Loclisttabedit<cr>
+  nnoremap <Plug>Loclisttabedit :silent Loclisttabedit<cr>
 endif
 
 if hasmapto('<Plug>Loclistedit')
-  nnoremap <Plug>Loclistedit :Loclistedit<cr>
+  nnoremap <Plug>Loclistedit :silent Loclistedit<cr>
 endif
 
 " }}}
