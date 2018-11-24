@@ -98,7 +98,6 @@ function! buffest#regdo(cmd, regname) abort
     throw g:buffest_unsupported_register_error
   endif
   exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
-  edit!
 endfunction
 
 " }}}
