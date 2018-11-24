@@ -94,7 +94,10 @@ endfunction
 
 function! buffest#regdo(cmd, regname) abort
   let l:regname = tolower(a:regname)
-  if !buffest#validreg(l:regname)
+  " escape character, cancel
+  if l:regname ==# ''
+    return
+  elseif !buffest#validreg(l:regname)
     throw g:buffest_unsupported_register_error
   endif
   exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
