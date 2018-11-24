@@ -25,8 +25,8 @@ function! buffest#init_au() abort
   augroup buffestfiletype
     autocmd!
     exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'@* set filetype=buffestreg'
-    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.',q set filetype=buffestqflist'
-    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.',l set filetype=buffestloclist'
+    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'\,q set filetype=buffestqflist'
+    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'\,l set filetype=buffestloclist'
   augroup END
 endfunction
 
@@ -140,12 +140,21 @@ function! buffest#filterlistfields(list) abort
   return buffest#intersection(l:list, g:buffest_supported_listfields)
 endfunction
 
+function! buffest#get_listfields() abort
+  if &filetype ==# 'buffestqflist'
+    return exists('s:qflist_fields') ? s:qflist_fields : v:null
+  elseif &filetype ==# 'buffestloclist'
+    return exists('s:loclist_fields') ? s:loclist_fields : v:null
+  endif
+endfunction
+
 function! buffest#has_listfields() abort
-  return exists('b:buffest_listfields') && len(b:buffest_listfields)
+  let l:listfields = buffest#get_listfields()
+  return type(l:listfields) != v:none && len(l:listfields)
 endfunction
 
 function! buffest#has_listfield(field) abort
-  return !buffest#has_listfields() || index(b:buffest_listfields, a:field) >= 0
+  return !buffest#has_listfields() || index(buffest#get_listfields(), a:field) >= 0
 endfunction
 
 " }}}
@@ -176,7 +185,7 @@ function! buffest#parse_listitem(item) abort
     let l:line = string(l:item)
   else
     " return a filtered string representation of the line
-    let l:line = buffest#dict2sortedstring(l:item, b:buffest_listfields)
+    let l:line = buffest#dict2sortedstring(l:item, buffest#get_listfields())
   endif
   return l:line
 endfunction
@@ -225,11 +234,12 @@ function! buffest#writeqflist() abort
 endfunction
 
 function! buffest#qflistdo(cmd, ...) abort
-  exec a:cmd . ' ' . buffest#tmpname(',q')
-  let b:buffest_listfields = buffest#filterlistfields(a:000)
-  " force resetting the filetype to read the new buffest_listfields
-  set filetype=buffestqflist
-  edit!
+  let s:qflist_fields = buffest#filterlistfields(a:000)
+  try
+    exec a:cmd . ' ' . buffest#tmpname(',q')
+  finally
+    unlet s:qflist_fields
+  endtry
 endfunction
 
 " }}}
@@ -245,11 +255,12 @@ function! buffest#writeloclist() abort
 endfunction
 
 function! buffest#loclistdo(cmd, ...) abort
-  exec a:cmd . ' ' . buffest#tmpname(',l')
-  let b:buffest_listfields = buffest#filterlistfields(a:000)
-  " force resetting the filetype to read the new buffest_listfields
-  set filetype=buffestloclist
-  edit!
+  let s:loclist_fields = buffest#filterlistfields(a:000)
+  try
+    exec a:cmd . ' ' . buffest#tmpname(',l')
+  finally
+    unlet s:loclist_fields
+  endtry
 endfunction
 
 " }}}
