@@ -92,7 +92,7 @@ function! buffest#regcomplete(...) abort
   return g:buffest_supported_registers
 endfunction
 
-function! buffest#regdo(regname, cmd) abort
+function! buffest#regdo(cmd, regname) abort
   let l:regname = tolower(a:regname)
   if !buffest#validreg(l:regname)
     throw g:buffest_unsupported_register_error

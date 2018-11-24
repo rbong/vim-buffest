@@ -1,13 +1,13 @@
 " Commands {{{
 
 command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regsplit call buffest#regdo(<f-args>, 'split')
+      \ Regsplit call buffest#regdo('split', <f-args>)
 command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regvsplit call buffest#regdo(<f-args>, 'vsplit')
+      \ Regvsplit call buffest#regdo('vsplit', <f-args>)
 command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regtabedit call buffest#regdo(<f-args>, 'tabedit')
+      \ Regtabedit call buffest#regdo('tabedit', <f-args>)
 command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regedit call buffest#regdo(<f-args>, 'edit')
+      \ Regedit call buffest#regdo('edit', <f-args>)
 
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Qflistsplit call buffest#qflistdo('split', <f-args>)
