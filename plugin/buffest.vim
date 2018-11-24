@@ -8,6 +8,8 @@ command! -complete=customlist,buffest#regcomplete -nargs=1
       \ Regtabedit call buffest#regdo('tabedit', <f-args>)
 command! -complete=customlist,buffest#regcomplete -nargs=1
       \ Regedit call buffest#regdo('edit', <f-args>)
+command! -complete=customlist,buffest#regcomplete -nargs=1
+      \ Regpedit call buffest#regdo('pedit', <f-args>)
 
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Qflistsplit call buffest#qflistdo('split', <f-args>)
@@ -49,6 +51,10 @@ endif
 
 if hasmapto('<Plug>Regedit')
   nnoremap <Plug>Regedit  :execute 'Regedit '.nr2char(getchar())<cr>
+endif
+
+if hasmapto('<Plug>Regpedit')
+  nnoremap <Plug>Regpedit  :execute 'Regpedit '.nr2char(getchar())<cr>
 endif
 
 if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') ==# ''
