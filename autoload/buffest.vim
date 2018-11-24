@@ -155,7 +155,7 @@ endfunction
 function! buffest#sanitize_listitem(item) abort
   let l:item = a:item
   " bufnr is not useful to edit for a human, it is converted to filename
-  if exists("l:item['bufnr']")
+  if has_key(l:item, 'bufnr')
     let l:item['filename'] = bufname(l:item['bufnr'])
     unlet l:item['bufnr']
   endif
