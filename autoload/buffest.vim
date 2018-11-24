@@ -141,6 +141,9 @@ function! buffest#filterlistfields(list) abort
 endfunction
 
 function! buffest#get_listfields() abort
+  if exists('b:buffest_listfields')
+    return b:buffest_listfields
+  endif
   if &filetype ==# 'buffestqflist'
     return exists('s:qflist_fields') ? s:qflist_fields : v:null
   elseif &filetype ==# 'buffestloclist'
@@ -155,6 +158,12 @@ endfunction
 
 function! buffest#has_listfield(field) abort
   return !buffest#has_listfields() || index(buffest#get_listfields(), a:field) >= 0
+endfunction
+
+function! buffest#save_listfields() abort
+  if !exists('b:buffest_listfields') && buffest#has_listfields()
+    let b:buffest_listfields = buffest#get_listfields()
+  endif
 endfunction
 
 " }}}
@@ -196,6 +205,8 @@ function! buffest#readlist(list) abort
   else
     let l:list = a:list
   endif
+
+  call buffest#save_listfields()
 
   let l:filelist = []
   for l:item in l:list
