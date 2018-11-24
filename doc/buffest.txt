@@ -53,7 +53,7 @@ Normal updating: >
 Force update: >
   :e!
 
-Buffers will automatically write to the register or list.
+Buffers will write to the register or list when the buffer is written to.
 
 Write buffer: >
   :w
