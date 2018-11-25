@@ -27,7 +27,7 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Loclisttabedit call buffest#loclistdo('tabedit', '0', <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistedit call buffest#loclistdo('edit', '0' <f-args>)
+      \ Loclistedit call buffest#loclistdo('edit', '0', <f-args>)
 
 " }}}
 
