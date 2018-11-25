@@ -4,9 +4,9 @@ let g:buffest_supported_registers = map(range(char2nr('a'),char2nr('z')),'nr2cha
 
 let g:buffest_unsupported_register_error = 'buffest: E1: register not supported'
 
-let g:buffest_supported_listfields = ['filename', 'module', 'lnum', 'pattern', 'col', 'vcol', 'nr', 'text', 'type', 'valid']
+let g:buffest_list_defaults = {'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}
 
-let g:buffest_default_list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
+let g:buffest_supported_listfields = keys(g:buffest_list_defaults)
 
 let s:tmpdir = '/' . $TMP . '/buffest/'
 if $TMP ==# ''
@@ -211,7 +211,7 @@ endfunction
 
 function! buffest#readlist(list) abort
   if !len(a:list)
-    let l:list = g:buffest_default_list
+    let l:list = [g:buffest_list_defaults]
   else
     let l:list = a:list
   endif
