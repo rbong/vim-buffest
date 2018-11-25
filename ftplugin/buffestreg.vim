@@ -1,7 +1,7 @@
 augroup buffestreg
   autocmd!
-  autocmd BufWritePost <buffer> call buffest#writereg()
-  autocmd BufEnter <buffer> call buffest#readreg()
+  autocmd BufWritePost <buffer> call buffest#write_reg()
+  autocmd BufEnter <buffer> call buffest#read_reg()
 augroup END
 
 setlocal bufhidden=delete

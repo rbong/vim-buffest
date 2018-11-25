@@ -1,7 +1,7 @@
 augroup buffestloclist
   autocmd!
-  autocmd BufWritePost <buffer> call buffest#writeloclist()
-  autocmd BufEnter <buffer> call buffest#readloclist()
+  autocmd BufWritePost <buffer> call buffest#write_loclist()
+  autocmd BufEnter <buffer> call buffest#read_loclist()
 augroup END
 
 setlocal bufhidden=delete

@@ -1,7 +1,7 @@
 augroup buffestqflist
   autocmd!
-  autocmd BufWritePost <buffer> call buffest#writeqflist()
-  autocmd BufEnter <buffer> call buffest#readqflist()
+  autocmd BufWritePost <buffer> call buffest#write_qflist()
+  autocmd BufEnter <buffer> call buffest#read_qflist()
 augroup END
 
 setlocal bufhidden=delete

@@ -1,33 +1,33 @@
 " Commands {{{
 
-command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regsplit call buffest#regdo('split', <f-args>)
-command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regvsplit call buffest#regdo('vsplit', <f-args>)
-command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regtabedit call buffest#regdo('tabedit', <f-args>)
-command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regedit call buffest#regdo('edit', <f-args>)
-command! -complete=customlist,buffest#regcomplete -nargs=1
-      \ Regpedit call buffest#regdo('pedit', <f-args>)
+command! -complete=customlist,buffest#reg_complete -nargs=1
+      \ Regsplit call buffest#reg_do('split', <f-args>)
+command! -complete=customlist,buffest#reg_complete -nargs=1
+      \ Regvsplit call buffest#reg_do('vsplit', <f-args>)
+command! -complete=customlist,buffest#reg_complete -nargs=1
+      \ Regtabedit call buffest#reg_do('tabedit', <f-args>)
+command! -complete=customlist,buffest#reg_complete -nargs=1
+      \ Regedit call buffest#reg_do('edit', <f-args>)
+command! -complete=customlist,buffest#reg_complete -nargs=1
+      \ Regpedit call buffest#reg_do('pedit', <f-args>)
 
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Qflistsplit call buffest#qflistdo('split', <f-args>)
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Qflistvsplit call buffest#qflistdo('vsplit', <f-args>)
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Qflisttabedit call buffest#qflistdo('tabedit', <f-args>)
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Qflistedit call buffest#qflistdo('edit', <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Qflistsplit call buffest#qflist_do('split', <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Qflistvsplit call buffest#qflist_do('vsplit', <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Qflisttabedit call buffest#qflist_do('tabedit', <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Qflistedit call buffest#qflist_do('edit', <f-args>)
 
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistsplit call buffest#loclistdo('aboveleft split', buffest#loclist_id(), <f-args>)
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistvsplit call buffest#loclistdo('aboveleft vsplit', buffest#loclist_id(), <f-args>)
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclisttabedit call buffest#loclistdo('tabedit', '0', <f-args>)
-command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistedit call buffest#loclistdo('edit', '0', <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Loclistsplit call buffest#loclist_do('aboveleft split', buffest#loclist_id(), <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Loclistvsplit call buffest#loclist_do('aboveleft vsplit', buffest#loclist_id(), <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Loclisttabedit call buffest#loclist_do('tabedit', '0', <f-args>)
+command! -complete=customlist,buffest#listfield_complete -nargs=*
+      \ Loclistedit call buffest#loclist_do('edit', '0', <f-args>)
 
 " }}}
 

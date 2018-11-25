@@ -43,7 +43,7 @@ function! buffest#tmpname(name) abort
   return fnameescape(s:tmpdir.a:name)
 endfunction
 
-function! buffest#regexesc(string) abort
+function! buffest#escape_regex(string) abort
   return escape(a:string, '\\^$*+?.()|[]{}')
 endfunction
 
@@ -70,33 +70,33 @@ endfunction
 
 " Register utilities {{{
 
-function! buffest#validreg(regname) abort
+function! buffest#valid_regname(regname) abort
   return index(g:buffest_supported_registers, a:regname) >= 0
 endfunction
 
 function! buffest#get_regname(filename) abort
-  let l:pattern = '^' . buffest#regexesc(s:tmpdir) . '@\zs.\?$'
+  let l:pattern = '^' . buffest#escape_regex(s:tmpdir) . '@\zs.\?$'
   let [l:match, l:matchstart, l:matchend] = matchstrpos(a:filename, l:pattern)
   if l:matchstart < 0
     return v:null
   endif
   let l:regname = tolower(l:match ==# '' ? '"' : l:match)
-  if !buffest#validreg(l:regname)
+  if !buffest#valid_regname(l:regname)
     return v:null
   endif
   return l:regname
 endfunction
 
-function! buffest#regcomplete(...) abort
+function! buffest#reg_complete(...) abort
   return g:buffest_supported_registers
 endfunction
 
-function! buffest#regdo(cmd, regname) abort
+function! buffest#reg_do(cmd, regname) abort
   let l:regname = tolower(a:regname)
   " escape character, cancel
   if l:regname ==# nr2char(27)
     return
-  elseif !buffest#validreg(l:regname)
+  elseif !buffest#valid_regname(l:regname)
     throw g:buffest_unsupported_register_error
   endif
   exec a:cmd . ' ' . buffest#tmpname('@' . l:regname)
@@ -106,7 +106,7 @@ endfunction
 
 " Reading/writing registers {{{
 
-function! buffest#readreg() abort
+function! buffest#read_reg() abort
   let l:filename = expand('%:p')
   let l:regname = buffest#get_regname(l:filename)
   if l:regname == v:null
@@ -116,7 +116,7 @@ function! buffest#readreg() abort
   edit!
 endfunction
 
-function! buffest#writereg() abort
+function! buffest#write_reg() abort
   let l:filename = expand('%:p')
   let l:regname = buffest#get_regname(l:filename)
   if l:regname == v:null
@@ -141,11 +141,11 @@ endfunction
 
 " List fields {{{
 
-function! buffest#listfieldcomplete(...) abort
+function! buffest#listfield_complete(...) abort
   return g:buffest_supported_listfields
 endfunction
 
-function! buffest#filterlistfields(list) abort
+function! buffest#filter_listfields(list) abort
   let l:list = buffest#uniq_unsorted(a:list)
   return buffest#intersection(l:list, g:buffest_supported_listfields)
 endfunction
@@ -209,7 +209,7 @@ function! buffest#parse_listitem(item) abort
   return l:line
 endfunction
 
-function! buffest#readlist(list) abort
+function! buffest#read_list(list) abort
   if !len(a:list)
     let l:list = [g:buffest_list_defaults]
   else
@@ -246,16 +246,16 @@ endfunction
 
 " Quickfix list {{{
 
-function! buffest#readqflist() abort
-  return buffest#readlist(getqflist())
+function! buffest#read_qflist() abort
+  return buffest#read_list(getqflist())
 endfunction
 
-function! buffest#writeqflist() abort
+function! buffest#write_qflist() abort
   call setqflist(buffest#get_writelist())
 endfunction
 
-function! buffest#qflistdo(cmd, ...) abort
-  let s:qflist_fields = buffest#filterlistfields(a:000)
+function! buffest#qflist_do(cmd, ...) abort
+  let s:qflist_fields = buffest#filter_listfields(a:000)
   try
     exec a:cmd . ' ' . buffest#tmpname(',q')
   finally
@@ -267,16 +267,16 @@ endfunction
 
 " Location list {{{
 
-function! buffest#readloclist() abort
-  return buffest#readlist(getloclist('.'))
+function! buffest#read_loclist() abort
+  return buffest#read_list(getloclist('.'))
 endfunction
 
-function! buffest#writeloclist() abort
+function! buffest#write_loclist() abort
   call setloclist(winnr() + 1, buffest#get_writelist())
 endfunction
 
-function! buffest#loclistdo(cmd, list_id, ...) abort
-  let s:loclist_fields = buffest#filterlistfields(a:000)
+function! buffest#loclist_do(cmd, list_id, ...) abort
+  let s:loclist_fields = buffest#filter_listfields(a:000)
   try
     exec a:cmd . ' ' . buffest#tmpname(',l#' . a:list_id)
   finally
