@@ -48,12 +48,11 @@ function! buffest#regexesc(string) abort
 endfunction
 
 function! buffest#dict2sortedstring(dict, fields) abort
-  let l:string = '{'
+  let l:keyvalues = []
   for l:field in a:fields
-    let l:string .= string(l:field) . ': ' . string(a:dict[l:field]) . ', '
+    let keyvalues += [string(l:field) . ': ' . string(a:dict[l:field])]
   endfor
-  let l:string .= '}'
-  let l:string = substitute(l:string, ', }$', '}', '')
+  let l:string = '{' . join(keyvalues, ', ') . '}'
   return l:string
 endfunction
 
