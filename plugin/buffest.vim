@@ -34,11 +34,11 @@ command! -complete=customlist,buffest#listfield_complete -nargs=*
 " Bindings {{{
 
 if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') ==# ''
-  map <unique> c@ <Plug>Regsplit
   " Only map this if the defaul mapping is used
   if mapcheck('c@@', 'n') ==# ''
     nnoremap <unique> c@@ :silent Regsplit "<cr>
   endif
+  map <unique> c@ <Plug>Regsplit
 endif
 
 nnoremap <Plug>Regsplit :silent execute 'Regsplit '.nr2char(getchar())<cr>
