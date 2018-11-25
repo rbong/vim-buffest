@@ -234,7 +234,7 @@ endfunction
 
 " Writing lists {{{
 
-function! buffest#writelistfile() abort
+function! buffest#get_writelist() abort
   let l:contents = []
   for line in readfile(expand('%'))
     let l:contents += [eval(line)]
@@ -251,7 +251,7 @@ function! buffest#readqflist() abort
 endfunction
 
 function! buffest#writeqflist() abort
-  call setqflist(buffest#writelistfile())
+  call setqflist(buffest#get_writelist())
 endfunction
 
 function! buffest#qflistdo(cmd, ...) abort
@@ -272,7 +272,7 @@ function! buffest#readloclist() abort
 endfunction
 
 function! buffest#writeloclist() abort
-  call setloclist(winnr() + 1, buffest#writelistfile())
+  call setloclist(winnr() + 1, buffest#get_writelist())
 endfunction
 
 function! buffest#loclistdo(cmd, list_id, ...) abort
