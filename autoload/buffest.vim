@@ -26,7 +26,7 @@ function! buffest#init_au() abort
     autocmd!
     exec 'autocmd BufNewFile,BufRead ' . s:tmpdir . '@* set filetype=buffestreg'
     exec 'autocmd BufNewFile,BufRead ' . s:tmpdir . '\,q set filetype=buffestqflist'
-    exec 'autocmd BufNewFile,BufRead ' . s:tmpdir . '\,l set filetype=buffestloclist'
+    exec 'autocmd BufNewFile,BufRead ' . s:tmpdir . '\,l#* set filetype=buffestloclist'
   augroup END
 endfunction
 
@@ -40,7 +40,7 @@ endfunction
 " General utilities {{{
 
 function! buffest#tmpname(name) abort
-  return s:tmpdir.a:name
+  return fnameescape(s:tmpdir.a:name)
 endfunction
 
 function! buffest#regexesc(string) abort
@@ -133,6 +133,14 @@ endfunction
 " Lists {{{
 
 " List utilities {{{
+
+function! buffest#loclist_id() abort
+  return string(bufnr('%'))
+endfunction
+
+" }}}
+
+" List fields {{{
 
 function! buffest#listfieldcomplete(...) abort
   return g:buffest_supported_listfields
@@ -268,10 +276,10 @@ function! buffest#writeloclist() abort
   call setloclist(winnr() + 1, buffest#writelistfile())
 endfunction
 
-function! buffest#loclistdo(cmd, ...) abort
+function! buffest#loclistdo(cmd, list_id, ...) abort
   let s:loclist_fields = buffest#filterlistfields(a:000)
   try
-    exec a:cmd . ' ' . buffest#tmpname(',l')
+    exec a:cmd . ' ' . buffest#tmpname(',l#' . a:list_id)
   finally
     unlet s:loclist_fields
   endtry

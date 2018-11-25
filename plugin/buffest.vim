@@ -21,13 +21,13 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
       \ Qflistedit call buffest#qflistdo('edit', <f-args>)
 
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistsplit call buffest#loclistdo('aboveleft split', <f-args>)
+      \ Loclistsplit call buffest#loclistdo('aboveleft split', buffest#loclist_id(), <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistvsplit call buffest#loclistdo('aboveleft vsplit', <f-args>)
+      \ Loclistvsplit call buffest#loclistdo('aboveleft vsplit', buffest#loclist_id(), <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclisttabedit call buffest#loclistdo('tabedit', <f-args>)
+      \ Loclisttabedit call buffest#loclistdo('tabedit', '0', <f-args>)
 command! -complete=customlist,buffest#listfieldcomplete -nargs=*
-      \ Loclistedit call buffest#loclistdo('edit', <f-args>)
+      \ Loclistedit call buffest#loclistdo('edit', '0' <f-args>)
 
 " }}}
 
