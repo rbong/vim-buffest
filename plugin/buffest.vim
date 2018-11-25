@@ -36,7 +36,9 @@ command! -complete=customlist,buffest#listfieldcomplete -nargs=*
 if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') ==# ''
   map <unique> c@ <Plug>Regsplit
   " Only map this if the defaul mapping is used
-  nnoremap <unique> c@@ :silent Regsplit "<cr>
+  if mapcheck('c@@', 'n') ==# ''
+    nnoremap <unique> c@@ :silent Regsplit "<cr>
+  endif
 endif
 
 nnoremap <Plug>Regsplit :silent execute 'Regsplit '.nr2char(getchar())<cr>
