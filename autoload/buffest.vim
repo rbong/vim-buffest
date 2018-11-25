@@ -8,7 +8,7 @@ let g:buffest_supported_listfields = ['filename', 'module', 'lnum', 'pattern', '
 
 let g:buffest_default_list = [{'filename': '', 'module': '', 'lnum': '', 'pattern': '', 'col': 0, 'vcol': 0, 'nr': -1, 'text': '', 'type': '', 'valid': 1}]
 
-let s:tmpdir = '/'.$TMP.'/buffest/'
+let s:tmpdir = '/' . $TMP . '/buffest/'
 if $TMP ==# ''
   let s:tmpdir = '/tmp/buffest/'
 endif
@@ -24,9 +24,9 @@ endfunction
 function! buffest#init_au() abort
   augroup buffestfiletype
     autocmd!
-    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'@* set filetype=buffestreg'
-    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'\,q set filetype=buffestqflist'
-    exec 'autocmd BufNewFile,BufRead '.s:tmpdir.'\,l set filetype=buffestloclist'
+    exec 'autocmd BufNewFile,BufRead ' . s:tmpdir . '@* set filetype=buffestreg'
+    exec 'autocmd BufNewFile,BufRead ' . s:tmpdir . '\,q set filetype=buffestqflist'
+    exec 'autocmd BufNewFile,BufRead ' . s:tmpdir . '\,l set filetype=buffestloclist'
   augroup END
 endfunction
 
@@ -50,7 +50,7 @@ endfunction
 function! buffest#dict2sortedstring(dict, fields) abort
   let l:string = '{'
   for l:field in a:fields
-    let l:string .= "'".l:field."': ".string(a:dict[l:field]).', '
+    let l:string .= "'" . l:field . "': " . string(a:dict[l:field]) . ', '
   endfor
   let l:string .= '}'
   let l:string = substitute(l:string, ', }$', '}', '')
@@ -76,7 +76,7 @@ function! buffest#validreg(regname) abort
 endfunction
 
 function! buffest#get_regname(filename) abort
-  let l:pattern = '^'.buffest#regexesc(s:tmpdir).'@\zs.\?$'
+  let l:pattern = '^' . buffest#regexesc(s:tmpdir) . '@\zs.\?$'
   let l:match = matchstrpos(a:filename, l:pattern)
   if l:match[1] < 0
     return v:null
@@ -100,7 +100,7 @@ function! buffest#regdo(cmd, regname) abort
   elseif !buffest#validreg(l:regname)
     throw g:buffest_unsupported_register_error
   endif
-  exec a:cmd . ' ' . buffest#tmpname('@'.l:regname)
+  exec a:cmd . ' ' . buffest#tmpname('@' . l:regname)
 endfunction
 
 " }}}
@@ -230,7 +230,7 @@ endfunction
 function! buffest#writelistfile() abort
   let l:contents = []
   for line in readfile(expand('%'))
-    execute 'let l:contents += ['.line.']'
+    execute 'let l:contents += [' . line . ']'
   endfor
   return l:contents
 endfunction
