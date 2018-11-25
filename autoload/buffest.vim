@@ -76,11 +76,11 @@ endfunction
 
 function! buffest#get_regname(filename) abort
   let l:pattern = '^' . buffest#regexesc(s:tmpdir) . '@\zs.\?$'
-  let l:match = matchstrpos(a:filename, l:pattern)
-  if l:match[1] < 0
+  let [l:match, l:matchstart, l:matchend] = matchstrpos(a:filename, l:pattern)
+  if l:matchstart < 0
     return v:null
   endif
-  let l:regname = tolower(l:match[0] ==# '' ? '"' : l:match[0])
+  let l:regname = tolower(l:match ==# '' ? '"' : l:match)
   if !buffest#validreg(l:regname)
     return v:null
   endif
