@@ -50,7 +50,7 @@ endfunction
 function! buffest#dict2sortedstring(dict, fields) abort
   let l:string = '{'
   for l:field in a:fields
-    let l:string .= "'" . l:field . "': " . string(a:dict[l:field]) . ', '
+    let l:string .= string(l:field) . ': ' . string(a:dict[l:field]) . ', '
   endfor
   let l:string .= '}'
   let l:string = substitute(l:string, ', }$', '}', '')
