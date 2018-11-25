@@ -237,7 +237,7 @@ endfunction
 function! buffest#writelistfile() abort
   let l:contents = []
   for line in readfile(expand('%'))
-    execute 'let l:contents += [' . line . ']'
+    let l:contents += [eval(line)]
   endfor
   return l:contents
 endfunction
