@@ -8,6 +8,9 @@ let g:buffest_list_defaults = {'filename': '', 'module': '', 'lnum': '', 'patter
 
 let g:buffest_supported_listfields = keys(g:buffest_list_defaults)
 
+" prefix lists with a timestamp to prevent vim instances from sharing buffers
+let g:buffest_list_prefix = localtime()
+
 let s:tmpdir = '/' . $TMP . '/buffest/'
 if $TMP ==# ''
   let s:tmpdir = '/tmp/buffest/'
@@ -134,7 +137,7 @@ endfunction
 " List utilities {{{
 
 function! buffest#loclist_id() abort
-  return string(bufnr('%'))
+  return g:buffest_list_prefix . '-' . string(bufnr('%'))
 endfunction
 
 " }}}
