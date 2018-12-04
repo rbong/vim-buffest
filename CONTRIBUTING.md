@@ -7,7 +7,7 @@ Please keep your changes in line with this philosophy.
 
 ## Pull Request Process
 
-1. Post an issue with the changes you wish to make.
+1. Post an issue with the changes you wish to make if it does not already exist.
 2. Changes to the code should be simple, iterative, and consistent.
 3. Run [vint](https://github.com/Kuniwak/vint) in the root directory and make any necessary changes.
 4. Keep documentation easy to read, concise, and up-to-date.
