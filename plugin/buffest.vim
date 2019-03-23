@@ -36,9 +36,9 @@ command! -complete=customlist,buffest#listfield_complete -nargs=*
 if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') ==# ''
   " Only map this if the defaul mapping is used
   if mapcheck('c@@', 'n') ==# ''
-    nnoremap <unique> c@@ :silent Regsplit "<cr>
+    nnoremap <silent> <unique> c@@ :silent Regsplit "<cr>
   endif
-  nmap <unique> c@ <Plug>Regsplit
+  nmap <silent> <unique> c@ <Plug>Regsplit
 endif
 
 nnoremap <Plug>Regsplit :silent execute 'Regsplit '.nr2char(getchar())<cr>
@@ -60,7 +60,7 @@ if hasmapto('<Plug>Regpedit')
 endif
 
 if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') ==# ''
-  nmap <unique> c,q <Plug>Qflistsplit
+  nmap <silent> <unique> c,q <Plug>Qflistsplit
 endif
 
 nnoremap <Plug>Qflistsplit :silent Qflistsplit<cr>
@@ -78,7 +78,7 @@ if hasmapto('<Plug>Qflistedit')
 endif
 
 if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') ==# ''
-  nmap <unique> c,l <Plug>Loclistsplit
+  nmap <silent> <unique> c,l <Plug>Loclistsplit
 endif
 
 nnoremap <Plug>Loclistsplit :silent Loclistsplit<cr>
