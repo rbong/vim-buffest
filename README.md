@@ -75,9 +75,9 @@ Force reload the contents of the buffer:
 This will change the default mappings:
 
 ```
-nnoremap <leader>br <Plug>Regsplit
-nnoremap <leader>bq <Plug>Qflistsplit
-nnoremap <leader>bl <Plug>Loclistsplit
+nnoremap <leader>br <Plug>BuffestRegsplit
+nnoremap <leader>bq <Plug>BuffestQflistsplit
+nnoremap <leader>bl <Plug>BuffestLoclistsplit
 ```
 
 Other commands can be mapped in the same way.

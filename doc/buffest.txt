@@ -6,7 +6,7 @@ Author:  Roger Bongers <http://github.com/rbong>
 
 COMMANDS                                                    *buffest-commands*
 
-All commands can be mapped using <Plug> and the name of the command.
+All commands can be mapped using <Plug>Buffest and the name of the command.
 See |using-<Plug>|.
 
 *:Regsplit* *:Regvsplit* *:Regtabedit* *:Regedit* *:Regpedit*
@@ -71,11 +71,11 @@ Alternative: >
 
 MAPPINGS                                                    *buffest-mappings*
 
-All mappings can be overriden by setting the corresponding <Plug> setting.
+All mappings can be overriden by setting the corresponding <Plug> mapping.
 
 c@{regname}                                                  *buffest-c@* *c@*
 
-Edit the register in a split (<Plug>Regsplit).
+Edit the register in a split (<Plug>BuffestRegsplit).
 
 c@@                                                        *buffest-c@@* *c@@*
 
@@ -84,10 +84,10 @@ Only set when the default register mapping is set.
 
 c\q                                                        *buffest-c\q* *c\q*
 
-Edit the quickfix list in a split (<Plug>Qflistsplit).
+Edit the quickfix list in a split (<Plug>BuffestQflistsplit).
 
 c\l                                                        *buffest-c\l* *c\l*
 
-Edit the location list in a split (<Plug>Loclistsplit).
+Edit the location list in a split (<Plug>BuffestLoclistsplit).
 
  vim: ft=help
