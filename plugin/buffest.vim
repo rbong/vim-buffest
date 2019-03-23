@@ -59,8 +59,8 @@ if hasmapto('<Plug>Regpedit')
   nnoremap <Plug>Regpedit  :silent execute 'Regpedit '.nr2char(getchar())<cr>
 endif
 
-if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') ==# ''
-  nmap <silent> <unique> c,q <Plug>Qflistsplit
+if !hasmapto('<Plug>Qflistsplit') && mapcheck('c\q', 'n') ==# ''
+  nmap <silent> <unique> c\q <Plug>Qflistsplit
 endif
 
 nnoremap <Plug>Qflistsplit :silent Qflistsplit<cr>
@@ -77,8 +77,8 @@ if hasmapto('<Plug>Qflistedit')
   nnoremap <Plug>Qflistedit :silent Qflistedit<cr>
 endif
 
-if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') ==# ''
-  nmap <silent> <unique> c,l <Plug>Loclistsplit
+if !hasmapto('<Plug>Loclistsplit') && mapcheck('c\l', 'n') ==# ''
+  nmap <silent> <unique> c\l <Plug>Loclistsplit
 endif
 
 nnoremap <Plug>Loclistsplit :silent Loclistsplit<cr>

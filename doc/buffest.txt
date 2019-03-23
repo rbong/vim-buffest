@@ -82,11 +82,11 @@ c@@                                                        *buffest-c@@* *c@@*
 Edit the {"} register in a split.
 Only set when the default register mapping is set.
 
-c,q                                                        *buffest-c,q* *c,q*
+c\q                                                        *buffest-c\q* *c\q*
 
 Edit the quickfix list in a split (<Plug>Qflistsplit).
 
-c,l                                                        *buffest-c,l* *c,l*
+c\l                                                        *buffest-c\l* *c\l*
 
 Edit the location list in a split (<Plug>Loclistsplit).
 
