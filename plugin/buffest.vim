@@ -38,7 +38,7 @@ if !hasmapto('<Plug>Regsplit') && mapcheck('c@', 'n') ==# ''
   if mapcheck('c@@', 'n') ==# ''
     nnoremap <unique> c@@ :silent Regsplit "<cr>
   endif
-  map <unique> c@ <Plug>Regsplit
+  nmap <unique> c@ <Plug>Regsplit
 endif
 
 nnoremap <Plug>Regsplit :silent execute 'Regsplit '.nr2char(getchar())<cr>
@@ -60,7 +60,7 @@ if hasmapto('<Plug>Regpedit')
 endif
 
 if !hasmapto('<Plug>Qflistsplit') && mapcheck('c,q', 'n') ==# ''
-  map <unique> c,q <Plug>Qflistsplit
+  nmap <unique> c,q <Plug>Qflistsplit
 endif
 
 nnoremap <Plug>Qflistsplit :silent Qflistsplit<cr>
@@ -78,7 +78,7 @@ if hasmapto('<Plug>Qflistedit')
 endif
 
 if !hasmapto('<Plug>Loclistsplit') && mapcheck('c,l', 'n') ==# ''
-  map <unique> c,l <Plug>Loclistsplit
+  nmap <unique> c,l <Plug>Loclistsplit
 endif
 
 nnoremap <Plug>Loclistsplit :silent Loclistsplit<cr>
