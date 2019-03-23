@@ -144,8 +144,8 @@ endfunction
 
 " List fields {{{
 
-function! buffest#listfield_complete(...) abort
-  return g:buffest_supported_listfields
+function! buffest#listfield_complete(lead, ...) abort
+  return filter(copy(g:buffest_supported_listfields), 'v:val =~# "^" . a:lead')
 endfunction
 
 function! buffest#filter_listfields(list) abort
