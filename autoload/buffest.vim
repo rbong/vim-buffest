@@ -115,7 +115,11 @@ function! buffest#read_reg() abort
   if l:regname == v:null
     return
   endif
-  call writefile(getreg(l:regname, 1, 1), l:filename)
+  let l:reg = getreg(l:regname, 1, 1)
+  if getreg(l:regname, 1)[-1:] ==# "\n"
+    let l:reg += ['']
+  endif
+  call writefile(l:reg, l:filename)
   edit!
 endfunction
 
@@ -125,7 +129,7 @@ function! buffest#write_reg() abort
   if l:regname == v:null
     return
   endif
-  call setreg(l:regname, readfile(l:filename), visualmode())
+  call setreg(l:regname, join(readfile(l:filename), "\n"), visualmode())
 endfunction
 
 " }}}
