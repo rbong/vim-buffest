@@ -62,11 +62,11 @@ Change the type of a register:
 
 ```
 " Change to single-line mode
-v:<C-U>wq<CR>
+v:<C-U>w<CR>
 " Change to multi-line mode
-V:<C-U>wq<CR>
+V:<C-U>w<CR>
 " Change to block mode
-<C-V>:<C-U>wq<CR>
+<C-V>:<C-U>w<CR>
 ```
 
 Reload the contents of the buffer:
