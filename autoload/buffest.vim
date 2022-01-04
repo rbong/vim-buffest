@@ -125,7 +125,13 @@ function! buffest#write_reg() abort
   if l:regname == v:null
     return
   endif
-  call setreg(l:regname, readfile(l:filename), visualmode())
+
+  let l:mode = visualmode()
+  if l:mode ==# ''
+    let l:mode = getregtype(l:regname)
+  endif
+
+  call setreg(l:regname, readfile(l:filename), l:mode)
 endfunction
 
 " }}}
