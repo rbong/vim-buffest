@@ -58,7 +58,7 @@ Write a buffer to the target:
 :w
 ```
 
-To change the type of the register, write it in the desired visual mode:
+Change the type of a register:
 
 ```
 " Change to single-line mode
