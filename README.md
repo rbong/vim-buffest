@@ -23,17 +23,6 @@ c@a
 Repace `a` with `<register>` to edit that register.
 Additionally, `c@@` opens the `"` register.
 
-To change the type of the register, write it in the desired visual mode.
-
-```
-" Change to single-line mode
-v:<C-U>wq<CR>
-" Change to multi-line mode
-V:<C-U>wq<CR>
-" Change to block mode
-<C-V>:<C-U>wq<CR>
-```
-
 **Opening the quickfix list**
 
 ```
@@ -67,6 +56,17 @@ Write a buffer to the target:
 
 ```
 :w
+```
+
+To change the type of the register, write it in the desired visual mode.
+
+```
+" Change to single-line mode
+v:<C-U>wq<CR>
+" Change to multi-line mode
+V:<C-U>wq<CR>
+" Change to block mode
+<C-V>:<C-U>wq<CR>
 ```
 
 Reload the contents of the buffer:
