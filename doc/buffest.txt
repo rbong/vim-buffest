@@ -59,7 +59,7 @@ Buffers will write to the register or list when the buffer is written to.
 Write buffer: >
   :w
 
-Write register in a specific visual mode (defaults to |linewise|): >
+Set register type: >
   V:<C-U>w
   v:<C-U>w
   <C-V>:<C-U>w
