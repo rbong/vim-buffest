@@ -115,7 +115,8 @@ function! buffest#read_reg() abort
   if l:regname == v:null
     return
   endif
-  call writefile(getreg(l:regname, 1, 1), l:filename)
+  set binary
+  call writefile(getreg(l:regname, 1, 1), l:filename, 'b')
   edit!
 endfunction
 
@@ -131,7 +132,7 @@ function! buffest#write_reg() abort
     let l:mode = getregtype(l:regname)
   endif
 
-  call setreg(l:regname, readfile(l:filename), l:mode)
+  call setreg(l:regname, readfile(l:filename, 'b'), l:mode)
 endfunction
 
 " }}}
