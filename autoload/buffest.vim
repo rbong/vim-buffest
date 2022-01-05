@@ -91,14 +91,17 @@ function! buffest#get_regname(filename) abort
 endfunction
 
 function! buffest#get_reg_type_label(filename)
-  let l:mode = getregtype(buffest#get_regname(a:filename))
-  if char2nr(l:mode) == 22
-    return 'BLOCKWISE'
-  elseif l:mode ==# 'v'
-    return 'CHARWISE'
-  elseif l:mode ==# 'V'
-    return 'LINEWISE'
+  if &filetype ==# 'buffestreg'
+    let l:mode = getregtype(buffest#get_regname(a:filename))
+    if char2nr(l:mode) == 22
+      return 'BLOCKWISE'
+    elseif l:mode ==# 'v'
+      return 'CHARWISE'
+    elseif l:mode ==# 'V'
+      return 'LINEWISE'
+    endif
   endif
+  return ''
 endfunction
 
 function! buffest#reg_complete(...) abort
