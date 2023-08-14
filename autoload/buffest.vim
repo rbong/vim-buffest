@@ -187,7 +187,7 @@ endfunction
 
 function! buffest#has_listfields() abort
   let l:listfields = buffest#get_listfields()
-  return type(l:listfields) != v:none && len(l:listfields)
+  return type(l:listfields) != v:null && len(l:listfields)
 endfunction
 
 function! buffest#has_listfield(field) abort
@@ -220,7 +220,7 @@ endfunction
 
 function! buffest#parse_listitem(item) abort
   let l:item = buffest#sanitize_listitem(a:item)
-  if type(l:item) == v:t_none
+  if l:item is v:null
     " item has been sanitized, return nothing
     let l:line = v:null
   elseif !buffest#has_listfields()
